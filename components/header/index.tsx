@@ -61,7 +61,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
           <a>
             <h1 className="site-logo">
               <Logo />
-              <div>Sole Authenticity<br/><div style={{ fontSize:'12px', textAlign: 'center', paddingTop:'10px'}}>Identity - Responsibility - Prestige</div></div>
+              <div className="brand-logo">Sole Authenticity<br/><div style={{ fontSize:'10px', textAlign: 'center', paddingTop:'10px'}}>Identity - Responsibility - Prestige</div></div>
             </h1>
           </a>
         </Link>
@@ -69,13 +69,13 @@ const Header = ({ isErrorPage }: HeaderType) => {
           ref={navRef}
           className={`site-nav ${menuOpen ? "site-nav--open" : ""}`}
         >
-          <a href="#">Reviews</a>
-          <a href="#">Check</a>
+          <a className="nav-link nav-link-grow-up" href="#">Reviews</a>
+          <a className="nav-link nav-link-grow-up" href="#">Check</a>
           <Link href="/products">
-            <a>Footwear</a>
+            <a className="nav-link nav-link-grow-up">Footwear</a>
           </Link>
-          <a href="#">Store</a>
-          <a href="#">Brands</a>
+          <a className="nav-link nav-link-grow-up" href="#">Store</a>
+          <a className="nav-link nav-link-grow-up" href="#">Brands</a>
           <button className="site-nav__btn">
             <p>Account</p>
           </button>

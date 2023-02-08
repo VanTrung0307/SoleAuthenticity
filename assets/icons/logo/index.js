@@ -7,13 +7,14 @@ const Logo = () => {
     <svg
       version="1.0"
       xmlns="http://www.w3.org/2000/svg"
-      width="600.000000pt"
-      height="600.000000pt"
-      viewBox="0 0 600.000000 600.000000"
+      width="650.000000pt"
+      height="650.000000pt"
+      viewBox="0 0 650.000000 650.000000"
       preserveAspectRatio="xMidYMid meet"
+      className="logo"
     >
       <g
-        transform="translate(0.000000,600.000000) scale(0.100000,-0.100000)"
+        transform="translate(0.000000,650.000000) scale(0.100000,-0.100000)"
         stroke="none"
       >
         <path
