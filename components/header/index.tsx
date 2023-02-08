@@ -61,7 +61,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
           <a>
             <h1 className="site-logo">
               <Logo />
-              <p>Sole Authenticity<br/><a className="slogan" style={{ fontSize:'13px' }}>Identity - Responsibility - Prestige</a></p>
+              <div>Sole Authenticity<br/><div style={{ fontSize:'12px', textAlign: 'center', paddingTop:'10px'}}>Identity - Responsibility - Prestige</div></div>
             </h1>
           </a>
         </Link>

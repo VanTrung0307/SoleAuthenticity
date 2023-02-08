@@ -8,13 +8,15 @@ const Footer = () => {
           <div className="site-footer__description">
             <h6>
               <Logo />{" "}
-              <p>
-                <span>Sole</span>Authenticity
+              <a>
+                <div style={{ fontSize: "18px" }}>
+                  <span>Sole</span>Authenticity
+                </div>
                 <br />
-                <a style={{ fontSize: "12px" }}>
+                <div style={{ fontSize: "10px" }}>
                   Identity - Responsibility - Prestige
-                </a>
-              </p>
+                </div>
+              </a>
             </h6>
             <p>
               House My Brand designs clothing for the young, the old & everyone
