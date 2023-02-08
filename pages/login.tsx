@@ -118,7 +118,7 @@ const LoginPage = () => {
                   <i className="icon-facebook"></i>Facebook
                 </button>
                 <button type="button" className="btn-social google-btn">
-                  <img src="/images/icons/google.svg" alt="google" /> Google
+                  <img src="/images/icons/google.svg" alt="google" />Google
                 </button>
               </div>
 

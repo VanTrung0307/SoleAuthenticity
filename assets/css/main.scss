@@ -2541,6 +2541,17 @@ h1,h2,h3,h4,h5 {
   }
 }
 
+.form-block__title_signup {
+  font-size: 20px;
+  font-weight: 600;
+  padding: 0 50px;
+  line-height: 100%;
+  width: 600px;
+  text-align: center;
+  margin-top: -50px;
+  margin-left: -70px;
+}
+
 .form {
   .form__input-row {
     margin-bottom: 15px;
