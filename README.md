@@ -23,7 +23,7 @@ This repo contains a work in progress Ecommerce responsive made with Next.js, Re
 
 ![image](https://user-images.githubusercontent.com/74370274/217716558-36f8abd0-f088-4e97-b9d8-3b48b0dc70eb.png)
 
-![Next Ecommerce screenshot](https://lucaspulliese.com/wp-content/uploads/2020/09/ecommerce-2.jpg)
+![image](https://user-images.githubusercontent.com/74370274/217716898-05c7415b-f89e-42bf-a427-059a37c26815.png)
 
 ## Next TO-DO
 
