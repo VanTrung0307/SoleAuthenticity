@@ -3,10 +3,11 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { server } from "../utils/server";
 import { postData } from "../utils/services";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { auth } from "../firebase/config";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 type LoginMail = {
   email: string;
@@ -15,6 +16,8 @@ type LoginMail = {
 
 const LoginPage = () => {
   const { register, handleSubmit, errors } = useForm();
+  const [idtoken, setIdToken] = useState<string>("");
+  const [user, setUser] = useState<object>({});
 
   const onSubmit = async (data: LoginMail) => {
     const res = await postData(`${server}/api/login`, {
@@ -26,11 +29,16 @@ const LoginPage = () => {
   };
 
   const router = useRouter();
-  const GoogleProvider = new GoogleAuthProvider();
   const handleLoginWithGoogle = () => {
-    signInWithPopup(auth, GoogleProvider)
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
+        console.log(user);
+        user.getIdToken(true).then(function(idToken: any) {
+          setIdToken(idToken);
+          console.log("IdToken: ", idToken);
+        })
         toast.success("Login Successful...!!");
         router.push("/");
       })
@@ -39,6 +47,25 @@ const LoginPage = () => {
       });
       console.log('result');
   };
+
+  // const handleLoginGoogle = () => {
+  // const provider = new GoogleAuthProvider();
+  //   signInWithRedirect(auth, provider);
+  // }
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser : any) => {
+  //     setUser(currentUser);
+  //     console.log('User', currentUser)
+  //     currentUser.getIdToken(true).then(function(idToken: any) {
+  //       setIdToken(idToken);
+  //       console.log('Token: ', idToken);
+  //     })
+  //   });
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
   
   // let jwtToken = firebase.auth().onAuthStateChanged(function(user) {
   //   if (user) {
