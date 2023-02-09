@@ -3,6 +3,11 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { server } from "../utils/server";
 import { postData } from "../utils/services";
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { auth } from "../firebase/config";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 type LoginMail = {
   email: string;
@@ -11,6 +16,8 @@ type LoginMail = {
 
 const LoginPage = () => {
   const { register, handleSubmit, errors } = useForm();
+  const [idtoken, setIdToken] = useState<string>("");
+  const [user, setUser] = useState<object>({});
 
   const onSubmit = async (data: LoginMail) => {
     const res = await postData(`${server}/api/login`, {
@@ -21,6 +28,45 @@ const LoginPage = () => {
     console.log(res);
   };
 
+  const router = useRouter();
+  const handleLoginWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        user.getIdToken(true).then(function(idToken: any) {
+          setIdToken(idToken);
+          console.log("IdToken: ", idToken);
+        })
+        toast.success("Login Successful...!!");
+        router.push("/");
+      })
+      .catch((error: any) => {
+        toast.error(error.message);
+      });
+      console.log('result');
+  };
+
+  // const handleLoginGoogle = () => {
+  // const provider = new GoogleAuthProvider();
+  //   signInWithRedirect(auth, provider);
+  // }
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser : any) => {
+  //     setUser(currentUser);
+  //     console.log('User', currentUser)
+  //     currentUser.getIdToken(true).then(function(idToken: any) {
+  //       setIdToken(idToken);
+  //       console.log('Token: ', idToken);
+  //     })
+  //   });
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
+  
   return (
     <Layout>
       <section className="form-page">
@@ -117,8 +163,13 @@ const LoginPage = () => {
                 <button type="button" className="btn-social fb-btn">
                   <i className="icon-facebook"></i>Facebook
                 </button>
-                <button type="button" className="btn-social google-btn">
-                  <img src="/images/icons/google.svg" alt="google" />Google
+                <button
+                  type="button"
+                  className="btn-social google-btn"
+                  onClick={handleLoginWithGoogle}
+                >
+                  <img src="/images/icons/google.svg" alt="google" />
+                  Google
                 </button>
               </div>
 
