@@ -3,6 +3,10 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { server } from "../utils/server";
 import { postData } from "../utils/services";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../firebase/config";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 type LoginMail = {
   email: string;
@@ -20,6 +24,31 @@ const LoginPage = () => {
 
     console.log(res);
   };
+
+  const router = useRouter();
+  const GoogleProvider = new GoogleAuthProvider();
+  const handleLoginWithGoogle = () => {
+    signInWithPopup(auth, GoogleProvider)
+      .then((result) => {
+        const user = result.user;
+        toast.success("Login Successful...!!");
+        router.push("/");
+      })
+      .catch((error: any) => {
+        toast.error(error.message);
+      });
+      console.log('result');
+  };
+  
+  // let jwtToken = firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //     user.getIdToken().then(function(accessToken: any) {
+  //         alert(accessToken);
+  //         return accessToken;
+  //     });
+  //   }
+  // });
+  
 
   return (
     <Layout>
@@ -117,8 +146,13 @@ const LoginPage = () => {
                 <button type="button" className="btn-social fb-btn">
                   <i className="icon-facebook"></i>Facebook
                 </button>
-                <button type="button" className="btn-social google-btn">
-                  <img src="/images/icons/google.svg" alt="google" />Google
+                <button
+                  type="button"
+                  className="btn-social google-btn"
+                  onClick={handleLoginWithGoogle}
+                >
+                  <img src="/images/icons/google.svg" alt="google" />
+                  Google
                 </button>
               </div>
 
