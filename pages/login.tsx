@@ -67,16 +67,6 @@ const LoginPage = () => {
   //   };
   // }, []);
   
-  // let jwtToken = firebase.auth().onAuthStateChanged(function(user) {
-  //   if (user) {
-  //     user.getIdToken().then(function(accessToken: any) {
-  //         alert(accessToken);
-  //         return accessToken;
-  //     });
-  //   }
-  // });
-  
-
   return (
     <Layout>
       <section className="form-page">
