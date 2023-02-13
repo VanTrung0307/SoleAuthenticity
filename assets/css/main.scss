@@ -1029,13 +1029,16 @@ h1,h2,h3,h4,h5 {
 }
 
 .subscribe {
+  border-radius: 30px;
   .subscribe__content {
     padding: 35px 20px;
+    border-radius: 30px;
     background-color: #FAFAFA;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
     background-position: center;
+    background-image: url('/images/subscribe.jpg');
     @include breakpoint(phone) {
       padding: 40px 60px 40px 60px;
     }
@@ -1046,6 +1049,7 @@ h1,h2,h3,h4,h5 {
     }
     &:before {
       content: '';
+      border-radius: 30px;
       width: 100%;
       left: 0;
       top: 0;
