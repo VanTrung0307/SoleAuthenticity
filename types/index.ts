@@ -9,11 +9,12 @@ export type PunctuationType = {
   votes: VotesType[]
 }
 
-export type ReviewType = {
-  name: string;
-  avatar: string;
+export type ReviewTypeList = {
+  id: string;
+  images: string[];
+  title: string;
+  types: string;
   description: string;
-  punctuation: number;
 }
 
 export type ProductType = {
@@ -41,7 +42,35 @@ export type ProductTypeList = {
   currentPrice?: number;
 }
 
+export type CheckTypeList = {
+  id: string;
+  name: string;
+  color: string;
+  images: string[];
+  status: string;
+}
+
 export type ProductStoreType = {
+  id: string;
+  name: string;
+  thumb: string;
+  price: number;
+  count: number;
+  color: string;
+  size: string;
+}
+
+export type CheckedType = {
+  id: string;
+  name: string;
+  thumb: string;
+  price: number;
+  count: number;
+  color: string;
+  size: string;
+}
+
+export type ReviewType = {
   id: string;
   name: string;
   thumb: string;

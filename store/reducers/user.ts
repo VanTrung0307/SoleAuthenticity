@@ -19,6 +19,7 @@ type ToggleFavType = {
 interface UserSliceTypes {
   user: any;
   favProducts: any;
+  favReviews: any;
 }
 
 const initialState = {
