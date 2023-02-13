@@ -19,4 +19,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 
   const review = reviewca.find(x => x.id === pid);
   res.status(200).json(review);
+
+  const store = stores.find(x => x.id === pid);
+  res.status(200).json(store);
 }
