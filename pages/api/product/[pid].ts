@@ -3,6 +3,7 @@ import reviewca from 'utils/data/reviewca';
 
 // fake data
 import products from '../../../utils/data/products';
+import { stores } from './../../../utils/data/stores';
 import { checked } from './../../../utils/data/checked';
 
 export default (req: NextApiRequest, res: NextApiResponse) => {

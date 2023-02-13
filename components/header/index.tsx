@@ -57,11 +57,23 @@ const Header = ({ isErrorPage }: HeaderType) => {
   return (
     <header className={`site-header ${!onTop ? "site-header--fixed" : ""}`}>
       <div className="container">
-        <Link href="/" style={{ marginRight:'-100px' }}>
+        <Link href="/" style={{ marginRight: "-100px" }}>
           <a>
             <h1 className="site-logo">
               <Logo />
-              <div className="brand-logo">Sole Authenticity<br/><div style={{ fontSize:'10px', textAlign: 'center', paddingTop:'10px'}}>Identity - Responsibility - Prestige</div></div>
+              <div className="brand-logo">
+                Sole Authenticity
+                <br />
+                <div
+                  style={{
+                    fontSize: "10px",
+                    textAlign: "center",
+                    paddingTop: "10px",
+                  }}
+                >
+                  Identity - Responsibility - Prestige
+                </div>
+              </div>
             </h1>
           </a>
         </Link>
@@ -69,13 +81,23 @@ const Header = ({ isErrorPage }: HeaderType) => {
           ref={navRef}
           className={`site-nav ${menuOpen ? "site-nav--open" : ""}`}
         >
-          <a className="nav-link nav-link-grow-up" href="#">Reviews</a>
-          <a className="nav-link nav-link-grow-up" href="#">Check</a>
+          <a className="nav-link nav-link-grow-up" href="#">
+            Reviews
+          </a>
+          <a className="nav-link nav-link-grow-up" href="#">
+            Check
+          </a>
           <Link href="/products">
             <a className="nav-link nav-link-grow-up">Footwear</a>
           </Link>
-          <a className="nav-link nav-link-grow-up" href="#">Store</a>
-          <a className="nav-link nav-link-grow-up" href="#">Brands</a>
+          <Link href="/stores">
+            <a className="nav-link nav-link-grow-up" href="#">
+              Store
+            </a>
+          </Link>
+          <a className="nav-link nav-link-grow-up" href="#">
+            Brands
+          </a>
           <button className="site-nav__btn">
             <p>Account</p>
           </button>
@@ -93,11 +115,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
                 className="icon-cancel"
                 onClick={() => setSearchOpen(!searchOpen)}
               ></i>
-              <input
-                type="text"
-                name="search"
-                placeholder="Searching....."
-              />
+              <input type="text" name="search" placeholder="Searching....." />
             </form>
             <i
               onClick={() => setSearchOpen(!searchOpen)}

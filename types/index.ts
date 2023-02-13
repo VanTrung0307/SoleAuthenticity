@@ -80,6 +80,13 @@ export type ReviewType = {
   size: string;
 }
 
+export type StoreTypeList = {
+  id: string;
+  name: string;
+  address: string;
+  images: string[];
+}
+
 export type GtagEventType = {
   action: string;
   category: string; 
