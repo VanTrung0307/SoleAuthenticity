@@ -75,8 +75,8 @@ export const products = [
       '/images/products/product-2_2.jpg',
       '/images/products/product-2_1.jpg',
       '/images/products/product-2_3.jpg',
-      '/images/products/product-2_1.jpg',
-      '/images/products/product-2_1.jpg',
+      '/images/products/product-2_4.jpg',
+      '/images/products/product-2_5.jpg',
     ],
     punctuation: {
       countOpinions: 81,

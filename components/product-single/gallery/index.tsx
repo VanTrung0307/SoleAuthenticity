@@ -1,8 +1,8 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { EffectFade, Navigation } from "swiper";
+import SwiperCore, { Scrollbar, Navigation } from "swiper";
 
-SwiperCore.use([EffectFade, Navigation]);
+SwiperCore.use([Scrollbar, Navigation]);
 
 type GalleryProductType = {
   images: string[];
@@ -21,32 +21,25 @@ const Gallery = ({ images }: GalleryProductType) => {
         ))}
       </div>
 
-      <Swiper navigation effect="slide" className="swiper-wrapper" style={{width: '500px', backgroundRepeat: 'repeat'}}>
-        <SwiperSlide>
-          <div className="product-gallery__image">
-            <img src="/images/products/product-1_4.jpg" alt="" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="product-gallery__image">
-            <img src="/images/products/product-1_1.jpg" alt="" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="product-gallery__image">
-            <img src="/images/products/product-1_2.jpg" alt="" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="product-gallery__image">
-            <img src="/images/products/product-1_3.jpg" alt="" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="product-gallery__image">
-            <img src="/images/products/product-1_5.jpg" alt="" />
-          </div>
-        </SwiperSlide>
+      <Swiper
+        effect="slide"
+        className="swiper-wrapper"
+        style={{
+          width: "500px",
+          height: "500px",
+          maxHeight: "500px",
+          maxWidth: "500px",
+        }}
+      >
+        {images.map((image) => (
+          <SwiperSlide
+            style={{ maxHeight: "500px", maxWidth: "500px" }}
+          >
+            <div key={image} >
+              <img src={image} alt="" style={{width: "500px", height: "500px"}}/>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </section>
   );
