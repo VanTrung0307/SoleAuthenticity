@@ -24,7 +24,8 @@ const StoresContent = () => {
               name={item.name}
               address={item.address}
               key={item.id}
-              images={item.images} 
+              images={item.images}
+              link={item.link}
             />
           ))}
         </section>

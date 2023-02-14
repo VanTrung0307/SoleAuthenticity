@@ -1,14 +1,14 @@
 export const checked = [
   {
     id: '1',
-    name: 'T-Shirt Summer Vibes',
+    name: ' Nike Dunk Low Panda ',
     status: 'Authentic',
     quantityAvailable: 2,
     category: 'T-shirt',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
-      '/images/products/product-1.jpg',
+      '/images/products/product-1_6.jpg',
     ],
     punctuation: {
       countOpinions: 81,
@@ -59,14 +59,14 @@ export const checked = [
   },
   {
     id: '2',
-    name: 'T-Shirt Summer Vibes',
+    name: 'Air Jordan 1 Retro High OG Patent Bred',
     status: 'Replica',
     quantityAvailable: 2,
     category: 'T-shirt',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
-      '/images/products/product-2.jpg',
+      '/images/products/product-2_3.jpg',
     ],
     punctuation: {
       countOpinions: 81,

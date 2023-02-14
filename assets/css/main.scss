@@ -1826,6 +1826,8 @@ h1,h2,h3,h4,h5 {
       }
     }
     .product-gallery__thumb {
+      cursor: pointer;
+      border: 1px solid #000;
       @include breakpoint(phone) {
         height: calc(100%/5 - 15px);
       }
@@ -1997,7 +1999,12 @@ h1,h2,h3,h4,h5 {
   }
   .product-gallery__image {
     height: 300px;
-    width: 100%;
+    position: relative;
+    background-repeat: repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #FAFAFA;
+    width: 300px;
     @include breakpoint(phone) {
       width: 476px;
       height: 476px;

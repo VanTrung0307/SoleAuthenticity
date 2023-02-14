@@ -5,7 +5,7 @@ import { toggleFavProduct } from "store/reducers/user";
 import { RootState } from "store";
 import { StoreTypeList } from "types";
 
-const StoreItem = ({id, name, address, images}: StoreTypeList) => {
+const StoreItem = ({id, name, address, images, link}: StoreTypeList) => {
   const dispatch = useDispatch();
   const { favProducts } = useSelector((state: RootState) => state.user);
 
@@ -33,7 +33,7 @@ const StoreItem = ({id, name, address, images}: StoreTypeList) => {
         className="product__image"
         style={{ width: "100px", height: "100px", borderRadius: "20px" }}
       >
-        <Link href={`/stores/${id}`}>
+        <Link href={link}>
           <a>
             <img
               style={{
@@ -49,7 +49,7 @@ const StoreItem = ({id, name, address, images}: StoreTypeList) => {
         </Link>
       </div>
 
-      <Link href={`/stores/${id}`}>
+      <Link href={link}>
         <div
           className="product__description"
           style={{

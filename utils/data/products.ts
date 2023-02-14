@@ -1,16 +1,20 @@
 export const products = [
   {
     id: '1',
-    name: 'T-Shirt Summer Vibes',
-    price: 119.99,
-    discount: 30,
+    name: ' Nike Dunk Low Panda',
+    price: 9000000.0,
+    discount: -34,
     quantityAvailable: 2,
     category: 'T-shirt',
-    currentPrice: 89.99,
+    currentPrice: 5900000.0,
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
-      '/images/products/product-1.jpg',
+      '/images/products/product-1_4.jpg',
+      '/images/products/product-1_1.jpg',
+      '/images/products/product-1_2.jpg',
+      '/images/products/product-1_3.jpg',
+      '/images/products/product-1_5.jpg',
     ],
     punctuation: {
       countOpinions: 81,
@@ -61,15 +65,18 @@ export const products = [
   },
   {
     id: '2',
-    name: 'T-Shirt Summer Vibes',
-    price: 119.99,
+    name: 'Air Jordan 1 Retro High OG Patent Bred',
+    price: 6500000.0,
     quantityAvailable: 2,
     category: 'T-shirt',
-    currentPrice: 89.99,
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
-      '/images/products/product-2.jpg',
+      '/images/products/product-2_2.jpg',
+      '/images/products/product-2_1.jpg',
+      '/images/products/product-2_3.jpg',
+      '/images/products/product-2_1.jpg',
+      '/images/products/product-2_1.jpg',
     ],
     punctuation: {
       countOpinions: 81,

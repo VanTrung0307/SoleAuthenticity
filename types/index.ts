@@ -21,7 +21,7 @@ export type ProductType = {
   id: string;
   name: string;
   thumb: string;
-  price: string;
+  price: number;
   count: number;
   color: string;
   size: string;
@@ -35,7 +35,7 @@ export type ProductType = {
 export type ProductTypeList = {
   id: string;
   name: string;
-  price: string;
+  price: number;
   color: string;
   images: string[];
   discount?: string;
@@ -54,7 +54,8 @@ export type ProductStoreType = {
   id: string;
   name: string;
   thumb: string;
-  price: number;
+  salePrice: number;
+  noDiscount: number;
   count: number;
   color: string;
   size: string;
@@ -85,6 +86,7 @@ export type StoreTypeList = {
   name: string;
   address: string;
   images: string[];
+  link: string;
 }
 
 export type GtagEventType = {
