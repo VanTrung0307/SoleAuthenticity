@@ -292,7 +292,7 @@ export const checked = [
   {
     id: '6',
     name: 'Jordan 1 Low',
-    status: 'Authentic',
+    status: 'Unable To Verify',
     quantityAvailable: 2,
     category: 'T-shirt',
     sizes: ['xl', 'l'], 

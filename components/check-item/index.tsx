@@ -28,7 +28,7 @@ const CheckItem = ({ status, images, id, name}: CheckTypeList) => {
           <a>
             <img style={{ borderRadius:'30px'}} src={images ? images[0] : ''} alt="product" />
             {status && 
-              <span style={{ backgroundColor: status === 'Authentic' ?  'limeGreen' : status === "Replica" ? 'red' : ''}} className="product__discount">{status}</span>
+              <span style={{ backgroundColor: status === 'Authentic' ?  'limeGreen' : status === "Replica" ? 'red' : status === 'Unable To Verify' ? 'gray' : ''}} className="product__discount">{status}</span>
             }
           </a>
         </Link>
