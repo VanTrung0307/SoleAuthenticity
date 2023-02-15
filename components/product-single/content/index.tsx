@@ -60,21 +60,22 @@ const Content = ({ product }: ProductContent) => {
   return (
     <section className="product-content">
       <div className="product-content__intro">
-        <h5 className="product__id">
-          Product ID:<br></br>
-          {product.id}
-        </h5>
+        <h5 className="product__id">Product ID: {product.id}</h5>
         <span className="product-on-sale">
           {product.currentPrice ? product.discount + "%" : "No Discount"}
         </span>
         <h2 className="product__name">{product.name}</h2>
 
         <div className="product__prices">
-          <h4>{product.currentPrice ? product.currentPrice + '₫': ''}</h4>
+          <h4>{product.currentPrice ? "$" + product.currentPrice : ""}</h4>
           <h4>
             {product.currentPrice
-              ? product.discount && <span>{product.price}₫</span>
-              : product.price + "₫"}
+              ? product.discount && (
+                  <span style={{ textDecoration: "line-through" }}>
+                    ${product.price}
+                  </span>
+                )
+              : "$" + product.price}
           </h4>
         </div>
       </div>
@@ -135,6 +136,11 @@ const Content = ({ product }: ProductContent) => {
               type="submit"
               onClick={() => addToCart()}
               className="btn btn--rounded btn--yellow"
+              style={{
+                pointerEvents:
+                  product.discount === "Sold Out" ? "none" : "auto",
+                opacity: product.discount === "Sold Out" ? 0.4 : '',
+              }}
             >
               Add to cart
             </button>

@@ -21,7 +21,7 @@ export type ProductType = {
   id: string;
   name: string;
   thumb: string;
-  price: number;
+  price: any;
   count: number;
   color: string;
   size: string;
@@ -35,7 +35,7 @@ export type ProductType = {
 export type ProductTypeList = {
   id: string;
   name: string;
-  price: number;
+  price: any;
   color: string;
   images: string[];
   discount?: string;
@@ -54,8 +54,8 @@ export type ProductStoreType = {
   id: string;
   name: string;
   thumb: string;
-  salePrice: number;
-  noDiscount: number;
+  salePrice: any;
+  noDiscount: any;
   count: number;
   color: string;
   size: string;

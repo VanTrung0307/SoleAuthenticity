@@ -9,8 +9,6 @@ type GalleryProductType = {
 };
 
 const Gallery = ({ images }: GalleryProductType) => {
-  /* Define a function that toggles the visibility of the image */
-
   return (
     <section className="product-gallery">
       <div className="product-gallery__thumbs">
@@ -32,11 +30,13 @@ const Gallery = ({ images }: GalleryProductType) => {
         }}
       >
         {images.map((image) => (
-          <SwiperSlide
-            style={{ maxHeight: "500px", maxWidth: "500px" }}
-          >
-            <div key={image} >
-              <img src={image} alt="" style={{width: "500px", height: "500px"}}/>
+          <SwiperSlide style={{ maxHeight: "500px", maxWidth: "500px" }}>
+            <div key={image}>
+              <img
+                src={image}
+                alt=""
+                style={{ width: "500px", height: "500px" }}
+              />
             </div>
           </SwiperSlide>
         ))}

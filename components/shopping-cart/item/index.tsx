@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { removeProduct, setCount } from 'store/reducers/cart';
 import { ProductStoreType } from 'types';
 
-const ShoppingCart = ({ thumb, name, id, color, size, count, price }: ProductStoreType) => {
+const ShoppingCart = ({ thumb, name, id, color, size, count, salePrice, noDiscount }: ProductStoreType) => {
   const dispatch = useDispatch();
 
   const removeFromCart = () => {
@@ -14,7 +14,8 @@ const ShoppingCart = ({ thumb, name, id, color, size, count, price }: ProductSto
         color, 
         size, 
         count, 
-        price
+        salePrice,
+        noDiscount
       }
     ))
   }
@@ -32,7 +33,8 @@ const ShoppingCart = ({ thumb, name, id, color, size, count, price }: ProductSto
         color, 
         size, 
         count, 
-        price
+        salePrice,
+        noDiscount
       },
       count,
     }
@@ -67,7 +69,7 @@ const ShoppingCart = ({ thumb, name, id, color, size, count, price }: ProductSto
           </button>
         </div>
       </td>
-      <td>${price}</td>
+      <td>${salePrice ? salePrice : noDiscount}</td>
       <td className="cart-item-cancel"><i className="icon-cancel" onClick={() => removeFromCart()}></i></td>
     </tr>
   )

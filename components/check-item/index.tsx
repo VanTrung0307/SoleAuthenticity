@@ -21,7 +21,7 @@ const CheckItem = ({ status, images, id, name}: CheckTypeList) => {
 
   return (
     <div className="product-item">
-      <div className="product__image">
+      <div className="product__image" style={{borderRadius: '30px'}}>
         <button type="button" onClick={toggleFav} className={`btn-heart ${isFavourite ? 'btn-heart--active' : ''}`}><i className="icon-heart"></i></button>
 
         <Link href={`/check/${id}`}>

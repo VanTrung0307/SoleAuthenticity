@@ -1827,7 +1827,7 @@ h1,h2,h3,h4,h5 {
     }
     .product-gallery__thumb {
       cursor: pointer;
-      border: 1px solid #000;
+      border: 1px solid gray;
       @include breakpoint(phone) {
         height: calc(100%/5 - 15px);
       }

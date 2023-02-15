@@ -1,14 +1,14 @@
 export const checked = [
   {
     id: '1',
-    name: ' Nike Dunk Low Panda ',
+    name: 'Jordan 1 Low',
     status: 'Authentic',
     quantityAvailable: 2,
     category: 'T-shirt',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
-      '/images/products/product-1_6.jpg',
+      '/images/check-img/check-1.jpg',
     ],
     punctuation: {
       countOpinions: 81,
@@ -59,14 +59,14 @@ export const checked = [
   },
   {
     id: '2',
-    name: 'Air Jordan 1 Retro High OG Patent Bred',
-    status: 'Replica',
+    name: 'Nike Dunk',
+    status: 'Authentic',
     quantityAvailable: 2,
     category: 'T-shirt',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
-      '/images/products/product-2_3.jpg',
+      '/images/check-img/check-2.jpg',
     ],
     punctuation: {
       countOpinions: 81,
@@ -117,14 +117,14 @@ export const checked = [
   },
   {
     id: '3',
-    name: 'T-Shirt Summer Vibes',
-    status: 'Authentic',
+    name: 'Nike Other',
+    status: 'Replica',
     quantityAvailable: 2,
     category: 'T-shirt',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
-      '/images/products/product-3.jpg',
+      '/images/check-img/check-3.jpg',
     ],
     punctuation: {
       countOpinions: 81,
@@ -175,14 +175,14 @@ export const checked = [
   },
   {
     id: '4',
-    name: 'T-Shirt Summer Vibes',
+    name: 'Jordan 1',
     status: 'Replica',
     quantityAvailable: 2,
     category: 'T-shirt',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
-      '/images/products/product-4.jpg',
+      '/images/check-img/check-4.jpg',
     ],
     punctuation: {
       countOpinions: 81,
@@ -233,14 +233,14 @@ export const checked = [
   },
   {
     id: '5',
-    name: 'T-Shirt Summer Vibes',
+    name: 'Jordan 1 Low',
     status: 'Authentic',
     quantityAvailable: 2,
     category: 'T-shirt',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
-      '/images/products/product-5.jpg',
+      '/images/check-img/check-5.jpg',
     ],
     punctuation: {
       countOpinions: 81,
@@ -291,14 +291,14 @@ export const checked = [
   },
   {
     id: '6',
-    name: 'T-Shirt Summer Vibes',
-    status: 'Replica',
+    name: 'Jordan 1 Low',
+    status: 'Authentic',
     quantityAvailable: 2,
     category: 'T-shirt',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
-      '/images/products/product-6.jpg',
+      '/images/check-img/check-6.jpg',
     ],
     punctuation: {
       countOpinions: 81,

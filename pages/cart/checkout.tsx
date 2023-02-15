@@ -9,8 +9,15 @@ const CheckoutPage = () => {
   const priceTotal = useSelector((state: RootState) => {
     const cartItems = state.cart.cartItems;
     let totalPrice = 0;
-    if(cartItems.length > 0) {
-      cartItems.map(item => totalPrice += item.price * item.count);
+    if (cartItems.length > 0) {
+      cartItems.map((item) => {
+        console.log(item.noDiscount);
+        if (item.salePrice != null) {
+          totalPrice += item.salePrice * item.count;
+        } else {
+          totalPrice += item.noDiscount * item.count;
+        }
+      });
     }
 
     return totalPrice;
