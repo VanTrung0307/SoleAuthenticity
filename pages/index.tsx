@@ -5,6 +5,7 @@ import Footer from "../components/footer";
 import Subscribe from "../components/subscribe";
 import ReviewsFeatured from "./../components/reviews-featured/index";
 import CheckFeatured from './../components/check-featured/index';
+import Download from './../components/download-banner/index';
 
 const IndexPage = () => {
   return (
@@ -50,6 +51,8 @@ const IndexPage = () => {
           </article>
         </div>
       </section>
+
+      <Subscribe />
 
       <section className="section">
         <div className="container">
@@ -172,7 +175,8 @@ const IndexPage = () => {
       </section>
 
       <ProductsFeatured />
-      <Subscribe />
+      
+      <Download />
       <Footer />
     </Layout>
   );
