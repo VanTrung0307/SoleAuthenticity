@@ -5,7 +5,7 @@ export const products = [
     price: 380.99,
     discount: -34,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'Nike',
     currentPrice: 249.76,
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
@@ -68,7 +68,7 @@ export const products = [
     name: 'Air Jordan 1 Retro High OG Patent Bred',
     price: 275.16,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'Jordan',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -131,7 +131,7 @@ export const products = [
     price: 507.99,
     quantityAvailable: 2,
     discount: -46,
-    category: 'T-shirt',
+    category: 'Adidas',
     currentPrice: 275.16,
     sizes: ['xl', 'l'], 
     colors: ['#000', '#6F3E18', '#D4BE8D', '#FFF'],
@@ -194,7 +194,7 @@ export const products = [
     name: 'Adidas Yeezy Boost 350 V2 Bone ',
     price: 338.66,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'Adidas',
     sizes: ['xl', 'l'], 
     colors: ['#000', '#6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -256,7 +256,7 @@ export const products = [
     name: 'Air Jordan 11 Retro Cool Grey',
     price: 342.89,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'Jordan',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -318,7 +318,7 @@ export const products = [
     name: 'New Balance 990V6',
     price: 199.99,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'New Balance',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -380,7 +380,7 @@ export const products = [
     name: 'New Balance 2002R',
     price: 139.99,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'New Balance',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -442,7 +442,7 @@ export const products = [
     name: 'Adidas Forum Low',
     price: 105.83,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'Adidas',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -504,7 +504,7 @@ export const products = [
     name: 'New Balance 550',
     price: 109.99,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'New Balance',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -566,7 +566,7 @@ export const products = [
     name: 'New Balance 990V2',
     price: 194.99,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'New Balance',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -630,7 +630,7 @@ export const products = [
     quantityAvailable: 2,
     discount: 'Not Sell In Stock',
     currentPrice: 'Order',
-    category: 'T-shirt',
+    category: 'Nike',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -692,7 +692,7 @@ export const products = [
     name: 'New Balance 550 White Grey',
     price: 140.49,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'New Balance',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -754,7 +754,7 @@ export const products = [
     name: 'Nike Dunk Low Racer Blue',
     price: 207.41,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'Nike',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -816,7 +816,7 @@ export const products = [
     name: 'Jordan 4 Retro Violet Ore x A Ma Maniére',
     price: 550.26,
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'Jordan',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [
@@ -877,7 +877,7 @@ export const products = [
     id: '15',
     name: 'Nike Air Max 90 SP ‘Reverse Duck Camo’',
     price: 249.31,
-    discount: 'Sold Out',
+    discount: 'Nike',
     quantityAvailable: 2,
     category: 'T-shirt',
     sizes: ['xl', 'l'], 
