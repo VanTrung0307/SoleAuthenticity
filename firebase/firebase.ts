@@ -39,6 +39,7 @@ export const upLoadImageColor = async (images: any, setListUrls: any) => {
             .catch((e) => toast.error(e.message));
     }
 };
+
 export const upLoadAllImage = async (images: any, setListUrls: any) => {
     const files: any[] = Object.values(images);
     for (let file of files) {

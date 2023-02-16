@@ -3,12 +3,14 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { server } from "../utils/server";
 import { postData } from "../utils/services";
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase/config";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { UserAuth } from "./api/context/AuthContext";
 
+import { axiosClient } from "./api/service/api-service";
+import { useEffect } from "react";
 type LoginMail = {
   email: string;
   password: string;
@@ -16,8 +18,9 @@ type LoginMail = {
 
 const LoginPage = () => {
   const { register, handleSubmit, errors } = useForm();
-  const [idtoken, setIdToken] = useState<string>("");
-  const [user, setUser] = useState<object>({});
+  // const [user, setUser] = useState<object>({});
+
+  const {userDetail, setUserDetail} = UserAuth();
 
   const onSubmit = async (data: LoginMail) => {
     const res = await postData(`${server}/api/login`, {
@@ -35,12 +38,22 @@ const LoginPage = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        user.getIdToken(true).then(function(idToken: any) {
-          setIdToken(idToken);
-          console.log("IdToken: ", idToken);
-        })
-        toast.success("Login Successful...!!");
-        router.push("/");
+        user.getIdToken(true).then(function(token: any) {
+          console.log(token);
+          axiosClient.post('/Login', {token}).then((idTokenReturn : any) => {
+            try {
+              const decode = JSON.parse(Buffer.from(idTokenReturn.data.data.split('.')[1], 'base64').toString());
+              setUserDetail(decode);
+              if (decode.role === 'Admin') {
+                router.push('/admin');
+              }
+            } catch (error) {
+              console.error(error);
+            }
+          })          
+        });
+        // toast.success("Login Successful...!!");
+        // router.push("/");
       })
       .catch((error: any) => {
         toast.error(error.message);
@@ -48,24 +61,11 @@ const LoginPage = () => {
       console.log('result');
   };
 
-  // const handleLoginGoogle = () => {
-  // const provider = new GoogleAuthProvider();
-  //   signInWithRedirect(auth, provider);
-  // }
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (currentUser : any) => {
-  //     setUser(currentUser);
-  //     console.log('User', currentUser)
-  //     currentUser.getIdToken(true).then(function(idToken: any) {
-  //       setIdToken(idToken);
-  //       console.log('Token: ', idToken);
-  //     })
-  //   });
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
+  useEffect(() => {
+    if (Object.keys(userDetail).length !== 0) {
+      handleLoginWithGoogle();
+    }
+  }, []);
   
   // let jwtToken = firebase.auth().onAuthStateChanged(function(user) {
   //   if (user) {

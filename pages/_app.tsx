@@ -1,17 +1,19 @@
-import React, { Fragment } from 'react';
 import Router from 'next/router';
-import {wrapper} from '../store';
+import { wrapper } from '../store';
 
 // types
 import type { AppProps } from 'next/app';
 
 // global styles
-import 'swiper/swiper.scss';
 import 'rc-slider/assets/index.css';
 import 'react-rater/lib/react-rater.css';
+import 'swiper/swiper.scss';
 import '../assets/css/styles.scss';
 
+import '../assets/css/global.css';
+
 import * as gtag from './../utils/gtag';
+import { AuthContextProvider } from './api/context/AuthContext';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -23,9 +25,9 @@ if(isProduction) {
 }
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
-  <Fragment>
+  <AuthContextProvider>
     <Component {...pageProps} />
-  </Fragment>
+  </AuthContextProvider>
 );
 
 export default wrapper.withRedux(MyApp);
