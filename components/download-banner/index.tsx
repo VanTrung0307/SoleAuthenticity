@@ -8,9 +8,9 @@ const Download = () => {
         <div className="download-content">
           <h1
             className="slogan-text"
-            style={{ color: "white", fontWeight: "bold", fontSize: "30px" }}
+            style={{ color: "white", fontWeight: "bold", fontSize: "35px" }}
           >
-            WANT TO KNOW REAL OR REPLICA?
+            WANT TO KNOW <a style={{color: 'limegreen'}}>REAL</a> OR <a style={{color: 'red'}}>REPLICA</a>?
           </h1>
           <h1
             className="slogan-text"

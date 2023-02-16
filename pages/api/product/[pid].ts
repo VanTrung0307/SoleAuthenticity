@@ -5,6 +5,7 @@ import reviewca from 'utils/data/reviewca';
 import products from '../../../utils/data/products';
 import { stores } from './../../../utils/data/stores';
 import { checked } from './../../../utils/data/checked';
+import { brands } from './../../../utils/data/brands';
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -22,4 +23,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 
   const store = stores.find(x => x.id === pid);
   res.status(200).json(store);
+
+  const brand = brands.find(x => x.id === pid);
+  res.status(200).json(brand);
 }

@@ -89,6 +89,12 @@ export type StoreTypeList = {
   link: string;
 }
 
+export type BrandTypeList = {
+  id: string;
+  name: string;
+  images: string[];
+}
+
 export type GtagEventType = {
   action: string;
   category: string; 
