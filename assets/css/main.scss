@@ -131,8 +131,8 @@ h1,h2,h3,h4,h5 {
   max-width: 380px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 16px;
-  padding-right: 16px;
+  //padding-left: 16px;
+  //padding-right: 16px;
   @include breakpoint(phone) {
     max-width: 650px;
     margin-left: auto;
@@ -318,7 +318,7 @@ h1,h2,h3,h4,h5 {
   .site-header__actions {
     margin-left: auto;
     display: flex;
-    align-items: center;
+    align-items: right;
     @include breakpoint(tablet-lg) {
       margin-left: 0;
     }
@@ -560,7 +560,7 @@ h1,h2,h3,h4,h5 {
       padding-right: 40px;
       background-color: #FFF;
       @include breakpoint(tablet-lg) {
-        width: 300px;
+        width: 170px;
         padding: 0 19px;
         text-align: left;
       }

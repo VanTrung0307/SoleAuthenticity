@@ -118,7 +118,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
               <input
                 type="text"
                 name="search"
-                placeholder="Enter the product you are looking for"
+                placeholder="Searching....."
               />
             </form>
             <i
