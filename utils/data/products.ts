@@ -877,9 +877,9 @@ export const products = [
     id: '15',
     name: 'Nike Air Max 90 SP ‘Reverse Duck Camo’',
     price: 249.31,
-    discount: 'Nike',
+    discount: 'Sold Out',
     quantityAvailable: 2,
-    category: 'T-shirt',
+    category: 'Nike',
     sizes: ['xl', 'l'], 
     colors: ['#000', '6F3E18', '#D4BE8D', '#FFF'],
     images: [

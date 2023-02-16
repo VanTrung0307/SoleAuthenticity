@@ -62,7 +62,7 @@ const Content = ({ product }: ProductContent) => {
       <div className="product-content__intro">
         <h5 className="product__id">Product ID: {product.id}</h5>
         <span className="product-on-sale">
-          {product.currentPrice ? product.discount + "%" : "No Discount"}
+          {product.currentPrice ? product.discount + "%" : product.discount === 'Sold Out' ? 'Sold Out' : "No Discount"}
         </span>
         <h2 className="product__name">{product.name}</h2>
 
