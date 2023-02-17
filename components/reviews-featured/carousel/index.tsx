@@ -1,9 +1,7 @@
 import ReviewItem from 'components/review-item/index'
 import { ReviewTypeList } from 'types';
 
-// import Swiper core and required components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { reviewca } from './../../../utils/data/reviewca';
 
 let slidesPerView = 1.3;
 let centeredSlides = true;
@@ -26,6 +24,7 @@ type ReviewCarouselType = {
 }
 
 const ReviewCarousel = ({ reviewcas }: ReviewCarouselType) => {
+
   if (!reviewcas) return <div>Loading</div>;
 
   return (
@@ -38,12 +37,12 @@ const ReviewCarousel = ({ reviewcas }: ReviewCarouselType) => {
       slidesPerView={slidesPerView} 
       className="swiper-wrapper">
         {reviewcas.map(item => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={item.productId}>
             <ReviewItem
-              id={item.id} 
-              images={item.images}
+              productId={item.productId} 
+              avatar={item.avatar}
               title={item.title}
-              types={item.types}
+              types="Review"
               description={item.description} 
             />
           </SwiperSlide>

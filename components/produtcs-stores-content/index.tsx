@@ -1,18 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import React, { useState, useEffect } from 'react';
 import List from './list';
 // import { products } from './../../utils/data/products';
 
-const ProductsContent = () => {
+
+const ProductsContent = ({data}: any) => {
   const [orderProductsOpen, setOrderProductsOpen] = useState(false);
+  const router = useRouter();
+  const {sid} = router.query;
 
   const [length, setLength] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch('https://soleauthenticity.azurewebsites.net/api/products/cus/ver-pagination/count');
+      const res = await fetch(`https://soleauthenticity.azurewebsites.net/api/products/store/${sid}/count`);
       const dataRes = await res.json();
 
       setLength(dataRes.data);
+
+      console.log("Data: ", data);
     }
 
     fetchData();
@@ -43,7 +49,7 @@ const ProductsContent = () => {
         </form>
       </div>
 
-      <List />
+      <List data={data} />
     </section>
   );
 };

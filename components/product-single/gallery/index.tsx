@@ -4,17 +4,17 @@ import SwiperCore, { Scrollbar, Navigation } from "swiper";
 
 SwiperCore.use([Scrollbar, Navigation]);
 
-type GalleryProductType = {
-  images: string[];
-};
+// type GalleryProductType = {
+//   images: object[];
+// };
 
-const Gallery = ({ images }: GalleryProductType) => {
+const Gallery = ({ images }: any) => {
   return (
     <section className="product-gallery">
       <div className="product-gallery__thumbs">
-        {images.map((image) => (
-          <div key={image} className="product-gallery__thumb">
-            <img src={image} alt="" />
+        {images.map((image: any) => (
+          <div key={image?.id} className="product-gallery__thumb">
+            <img src={image.imgPath} alt="" />
           </div>
         ))}
       </div>
@@ -29,11 +29,11 @@ const Gallery = ({ images }: GalleryProductType) => {
           maxWidth: "500px",
         }}
       >
-        {images.map((image) => (
+        {images.map((image: any) => (
           <SwiperSlide style={{ maxHeight: "500px", maxWidth: "500px" }}>
-            <div key={image}>
+            <div key={image.id}>
               <img
-                src={image}
+                src={image.imgPath}
                 alt=""
                 style={{ width: "500px", height: "500px" }}
               />

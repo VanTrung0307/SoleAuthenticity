@@ -1,23 +1,11 @@
-import { GetServerSideProps } from "next";
+// import { GetServerSideProps } from "next";
 import React from "react";
-import { ProductType } from "types";
-import { server } from "utils/server";
+import { ProductTypeList } from "types";
 
 type ProductCrumbType = {
-  product: ProductType;
+  product: ProductTypeList;
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const pid = query.pid;
-  const res = await fetch(`${server}/api/product/${pid}`);
-  const product = await res.json();
-
-  return {
-    props: {
-      product,
-    },
-  };
-};
 
 const Productcrumb = ({ product }: ProductCrumbType) => {
   return (

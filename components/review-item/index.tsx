@@ -1,29 +1,30 @@
 import Link from "next/link";
 import { some } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleFavProduct } from "store/reducers/user";
+// import { toggleFavProduct } from "store/reducers/user";
 import { RootState } from "store";
 import { ReviewTypeList } from "types";
 
 const ReviewItem = ({
-  id,
-  images,
+  productId,
+  avatar,
   title,
   description,
   types,
 }: ReviewTypeList) => {
-  const dispatch = useDispatch();
+  let rid = productId.toString();
+  // const dispatch = useDispatch();
   const { favProducts } = useSelector((state: RootState) => state.user);
 
-  const isFavourite = some(favProducts, (reviewId) => reviewId === id);
+  const isFavourite = some(favProducts, (reviewId) => reviewId === productId);
 
-  const toggleFav = () => {
-    dispatch(
-      toggleFavProduct({
-        id,
-      })
-    );
-  };
+  // const toggleFav = () => {
+  //   dispatch(
+  //     toggleFavProduct({
+  //       title
+  //     })
+  //   );
+  // };
 
   return (
     <div className="product-item">
@@ -33,13 +34,13 @@ const ReviewItem = ({
       >
         <button
           type="button"
-          onClick={toggleFav}
+          // onClick={toggleFav}
           className={`btn-heart ${isFavourite ? "btn-heart--active" : ""}`}
         >
           <i className="icon-heart"></i>
         </button>
 
-        <Link href={`/product/${id}`}>
+        <Link href={`/review/${rid}`}>
           <a>
             <img
               style={{
@@ -47,7 +48,7 @@ const ReviewItem = ({
                 width: "100%",
                 height: "200px",
               }}
-              src={images ? images[0] : ""}
+              src={avatar}
               alt="product"
             />
 
@@ -69,7 +70,7 @@ const ReviewItem = ({
           </a>
         </Link>
 
-        <Link href={`/product/${id}`}>
+        <Link href={`/review/${rid}`}>
           <div
             style={{
               backgroundColor: "black",
