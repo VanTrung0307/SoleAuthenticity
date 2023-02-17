@@ -9,9 +9,9 @@ export type PunctuationType = {
   votes: VotesType[]
 }
 
-export type ReviewTypeList = {
-  id: string;
-  images: string[];
+export interface ReviewTypeList {
+  productId: number;
+  avatar: string;
   title: string;
   types: string;
   description: string;
@@ -37,9 +37,9 @@ export type ProductTypeList = {
   name: string;
   price: any;
   color: string;
-  images: string[];
-  discount?: string;
-  currentPrice?: number;
+  imgPath: string;
+  // discount?: string;
+  // currentPrice?: number;
 }
 
 export type CheckTypeList = {
@@ -82,17 +82,17 @@ export type ReviewType = {
 }
 
 export type StoreTypeList = {
-  id: string;
+  id: number;
   name: string;
   address: string;
-  images: string[];
-  link: string;
+  avatar: string;
+  // link: string;
 }
 
 export type BrandTypeList = {
   id: string;
   name: string;
-  images: string[];
+  avatar: string;
 }
 
 export type GtagEventType = {

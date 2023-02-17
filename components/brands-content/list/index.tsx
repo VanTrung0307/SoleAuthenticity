@@ -1,18 +1,30 @@
-import useSwr from 'swr';
-
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import StoresLoading from './loading/index.js';
 import BrandItem from './../../brand-item/index';
 import { BrandTypeList } from 'types/index.js';
 
 const BrandsContent = () => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSwr('/api/brands', fetcher);
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  // const { data, error } = useSwr('/api/brands', fetcher);
 
-  if (error) return <div>Failed to load users</div>;
+  const [data, setData] = useState<BrandTypeList[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const res = await fetch('https://soleauthenticity.azurewebsites.net/api/brands/cus/pagination?page=1&pageSize=10');
+      const resData = await res.json();
+
+      setData(resData.data);
+      setLoading(false);
+    }
+
+    fetchData();
+  }, [])
   return (
     <>
-      {!data && 
+      {loading && 
         <StoresLoading />
       }
 
@@ -23,7 +35,7 @@ const BrandsContent = () => {
               id={item.id} 
               name={item.name}
               key={item.id}
-              images={item.images}
+              avatar={item.avatar}
             />
           ))}
         </section>

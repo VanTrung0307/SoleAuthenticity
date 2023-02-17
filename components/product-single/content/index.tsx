@@ -6,14 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { some } from "lodash";
 import { addProduct } from "store/reducers/cart";
 import { toggleFavProduct } from "store/reducers/user";
-import { ProductType, ProductStoreType } from "types";
+import { ProductStoreType } from "types";
 import { RootState } from "store";
 
-type ProductContent = {
-  product: ProductType;
-};
+// type ProductContent = {
+//   product: ProductType;
+// };
 
-const Content = ({ product }: ProductContent) => {
+const Content = ({ product }: any) => {
   const dispatch = useDispatch();
   const [count, setCount] = useState<number>(1);
   const [color, setColor] = useState<string>("");
