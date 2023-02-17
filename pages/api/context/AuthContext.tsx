@@ -1,28 +1,42 @@
-import { signOut } from "firebase/auth";
-import { auth } from "firebase/config";
+// import { signOut } from "firebase/auth";
+// import { auth } from "firebase/config";
 
 import { useContext, createContext, useState, ReactNode } from "react";
 
-export const AuthContext = createContext<any | null>(null);
+// export const AuthContext = createContext<any | null>(null);
 
-type Props = {
-  children: ReactNode;
+// type Props = {
+//   children: ReactNode;
+// };
+
+type AuthContextProps = {
+  user: any | null;
+  setUser: (user: any | null) => void;
 };
 
-export const AuthContextProvider = ({ children }: Props) => {
-  const [userDetail, setUserDetail] = useState<object>({});
+const AuthContext = createContext<AuthContextProps>({
+  user: null,
+  setUser: () => {},
+});
+
+export function UseAuth() {
+  return useContext(AuthContext);
+}
+
+export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<any | null>(null);
   
-  const logOut = () => {
-    signOut(auth);
-  }
+  // const logOut = () => {
+  //   signOut(auth);
+  // }
 
   return (
-    <AuthContext.Provider value={{ userDetail, setUserDetail, logOut }}>
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const UserAuth = () => {
-  return useContext(AuthContext);
-};
+// export const UserAuth = () => {
+//   return useContext(AuthContext);
+// };

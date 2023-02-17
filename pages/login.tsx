@@ -1,52 +1,46 @@
 import Layout from "../layouts/Main";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { server } from "../utils/server";
-import { postData } from "../utils/services";
+// import { server } from "../utils/server";
+// import { postData } from "../utils/services";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase/config";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { UserAuth } from "./api/context/AuthContext";
+import { UseAuth } from "./api/context/AuthContext";
 
-import { axiosClient } from "./api/service/api-service";
+// import { axiosClient } from "./api/service/api-service";
 import { useEffect } from "react";
-type LoginMail = {
-  email: string;
-  password: string;
-};
+import { axiosClient } from "./api/service/api-service";
+// type LoginMail = {
+//   email: string;
+//   password: string;
+// };
 
 const LoginPage = () => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, errors } = useForm();
   // const [user, setUser] = useState<object>({});
 
-  const {userDetail, setUserDetail} = UserAuth();
-
-  const onSubmit = async (data: LoginMail) => {
-    const res = await postData(`${server}/api/login`, {
-      email: data.email,
-      password: data.password,
-    });
-
-    console.log(res);
-  };
+  const {user, setUser} = UseAuth();
 
   const router = useRouter();
+
   const handleLoginWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         user.getIdToken(true).then(function(token: any) {
-          console.log(token);
+          // console.log(token);
           axiosClient.post('/Login', {token}).then((idTokenReturn : any) => {
             try {
               const decode = JSON.parse(Buffer.from(idTokenReturn.data.data.split('.')[1], 'base64').toString());
-              setUserDetail(decode);
-              if (decode.role === 'Admin') {
-                router.push('/admin');
-              }
+              console.log("Token return: ", decode)
+              setUser(decode);
+              // if (decode.role === 'Admin') {
+              //   router.push('/admin');
+              // }
             } catch (error) {
               console.error(error);
             }
@@ -62,10 +56,10 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    if (Object.keys(userDetail).length !== 0) {
+    if (user !== null) {
       handleLoginWithGoogle();
     }
-  }, []);
+  }, [user]);
   
   return (
     <Layout>
@@ -93,7 +87,7 @@ const LoginPage = () => {
               alt="Jordan"
             />
             <h2 className="form-block__title">Log in</h2>
-            <form className="form" onSubmit={handleSubmit(onSubmit)}>
+            <form className="form">
               <div className="form__input-row">
                 <input
                   className="form__input"
