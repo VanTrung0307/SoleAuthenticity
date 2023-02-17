@@ -77,14 +77,14 @@ const StoreItem = ({ id, name, address, avatar }: StoreTypeList) => {
           }}
         >
           <h3 style={{ fontWeight: "bold" }}>{name}</h3>
-          <h3>
+          <div style={{display: "inline-block"}}>
             <img
               src="/images/location.png"
               alt=""
-              style={{ width: "30px", height: " 30px" }}
+              style={{ width: "30px", height: "30px" }}
             />
-            {address}
-          </h3>
+            <h3>{address}</h3>
+          </div>
         </div>
       </Link>
     </div>
