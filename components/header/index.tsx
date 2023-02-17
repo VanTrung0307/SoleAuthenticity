@@ -81,7 +81,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
           ref={navRef}
           className={`site-nav ${menuOpen ? "site-nav--open" : ""}`}
         >
-          <Link href={"/reviews"}>
+          <Link href="/reviews">
             <a className="nav-link nav-link-grow-up" href="#">
               Reviews
             </a>

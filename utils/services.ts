@@ -1,5 +1,5 @@
 // function to post data
-export async function postData(url = '', data = {}) {
+export async function postData(url = 'https://soleauthenticity.azurewebsites.net/api/', data = {}) {
   const response = await fetch(url, {
     method: 'POST', 
     mode: 'cors',

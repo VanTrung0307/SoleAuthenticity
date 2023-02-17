@@ -1,68 +1,114 @@
-import React from "react";
 // import Link from "next/link";
-import Image from "next/image";
 // import dayjs from "dayjs";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store";
+
+interface PostProps {
+  productId: number;
+  date: Date;
+  tag: string;
+  category: string;
+  elements: string;
+  title: string;
+  description: string;
+  avatar: string;
+}
 
 export default function Post(props: PostProps) {
   let rid = props.productId.toString();
   // let slug = props.title?.toLowerCase().replaceAll(" ","-")
   // console.log(slug);
 
+  const current = new Date();
+  const date = `${current.getDate()}/${
+    current.getMonth() + 1
+  }/${current.getFullYear()}`;
+
+
+
   return (
-    <div
-      className={`inline-flex my-24 flex-col sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row justify-center  items-center mx-auto  text-[rgba(35,46,82,1)]  transition-all`}
-    >
-      <div className="gap-3 px-0 sm:px-0 md:px-0 lg:px-3  xl:px-3  2xl:px-3  flex flex-col  items-start w-6/6 sm:w-6/6 md:w-[610px] lg:w-[610px] xl:w-[610px] 2xl:w-[610px]  mx-auto">
-        <div className="gap-6 flex flex-col justify-center items-start">
-          <div className="flex items-start text-center">
-            <div className={`rounded-l-md px-3 pt-2 pb-2.5 gap-2.5 flex justify-center items-center font-semibold bg-[rgba(235,242,254,1)] transition-all`}>
-                  
-                  <p className="uppercase m-0 text-[13px] leading-[1.2]">
-                    {props.tag}
-                  </p>
+    <div className="product-item">
+      <div
+        className="product__image"
+        style={{ borderRadius: "30px", width: "400px", height: "200px", margin: '0px 80px 100px 0px' }}
+      >
+        <Link href={`/product/${rid}`}>
+          <a>
+            <img
+              style={{
+                borderRadius: "30px 30px 0px 0px",
+                width: "100%",
+                height: "200px",
+              }}
+              src={props.avatar}
+              alt="product"
+            />
 
-                </div>
-
-            {/* <div className="rounded-r-md px-3 pt-2 pb-2.5 bg-white gap-2.5 flex justify-center items-center font-medium ">
-              <time
-                dateTime={props.date.toString()}
-                className="uppercase m-0 text-[13px] leading-[1.2]"
+            {props.tag && (
+              <span
+                style={{
+                  backgroundColor:
+                    props.tag === "Guides"
+                      ? "orange"
+                      : props.tag === "Reviews"
+                      ? "black"
+                      : "",
+                }}
+                className="product__discount"
               >
-                {dayjs(props.date).format("DD MMMM , YYYY")}
-              </time>
-            </div> */}
+                {props.tag}
+              </span>
+            )}
+          </a>
+        </Link>
+
+        <Link href={`/product/${rid}`}>
+          <div
+            style={{
+              backgroundColor: "black",
+              borderRadius: "0px 0px 30px 30px",
+              width: "100%",
+              height: "130px",
+              cursor: "pointer",
+              display: "flex",
+              flexDirection: "column",
+            }}
+            className="product__description"
+          >
+            <h1
+              style={{
+                fontWeight: "bold",
+                fontSize: "20px",
+                paddingBottom: "20px",
+                color: "white",
+                fontFamily: "arial",
+                textAlign: "left",
+                paddingLeft: "10px",
+                paddingTop: "10px",
+                flexWrap: 'wrap'
+              }}
+            >
+              {props.title}
+            </h1>
+            <h3
+              style={{
+                fontSize: "15px",
+                fontFamily: "arial",
+                color: "white",
+                textAlign: "left",
+                paddingLeft: "10px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                flexWrap: 'wrap'
+              }}
+            >
+              {props.description}
+            </h3>
           </div>
-
-          <Link href={`/review/${rid}`}>
-            <div style={{cursor: "pointer"}}>
-              <p className="font-bold text-left m-0 text-[28px] leading-[1.3]">
-                {props.title}
-              </p>
-              <p className="text-lg font-normal leading-normal text-left m-0">
-              {props.description.substring(0, 99)}
-            </p>
-            </div>
-          </Link>
-        </div>
+        </Link>
       </div>
-
-      <Image
-        src={`${props.avatar}`}
-        width={300}
-        height={210}
-        alt={props.title}
-        className={`rounded-lg bg-cover bg-no-repeat bg-center w-full sm:w-full md:w-full  lg:w-[300px] xl:w-[300px] 2xl:w-[300px] h-[210px] transition-all`}
-      />
     </div>
   );
-}
-interface PostProps {
-  productId: number;
-  tag: string,
-  category: string,
-  elements: string;
-  title: string;
-  description: string;
-  avatar: string;
 }

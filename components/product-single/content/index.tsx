@@ -15,9 +15,16 @@ import { RootState } from "store";
 
 const Content = ({ product }: any) => {
   const dispatch = useDispatch();
-  const [count, setCount] = useState<number>(1);
+  const [count, setCount] = useState<number>(0);
   const [color, setColor] = useState<string>("");
   const [itemSize, setItemSize] = useState<string>("");
+
+  const onClick = () => {
+    setCount(c => c + 1);
+  };
+  const onClickDec = () => {
+    setCount(c => Math.max(c - 1, 0));
+  };
 
   const onColorSet = (e: string) => setColor(e);
   const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -117,7 +124,7 @@ const Content = ({ product }: any) => {
             <div className="quantity-button">
               <button
                 type="button"
-                onClick={() => setCount(count - 1)}
+                onClick={onClickDec}
                 className="quantity-button__btn"
               >
                 -
@@ -125,7 +132,7 @@ const Content = ({ product }: any) => {
               <span>{count}</span>
               <button
                 type="button"
-                onClick={() => setCount(count + 1)}
+                onClick={onClick}
                 className="quantity-button__btn"
               >
                 +

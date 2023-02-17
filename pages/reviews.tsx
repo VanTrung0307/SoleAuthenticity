@@ -1,6 +1,6 @@
+import Pagination from "../components/pagination-preview/Pagination";
 import Post from "../components/post/Post";
 import Newsletter from "../components/previews-letter/Newsletter";
-import Pagination from "../components/pagination-preview/Pagination";
 // import dayjs from "dayjs";
 import Footer from "components/footer";
 import Layout from "../layouts/Main";
@@ -19,8 +19,8 @@ xl	1280px	@media (min-width: 1280px) { ... }
 
 interface previewPageProps {
   elements: string;
-  // date: "2023-02-19",
-  tag: string,
+  date: Date;
+  tag: string;
   title: string;
   description: string;
   avatar: string;
@@ -32,46 +32,72 @@ interface previewPageProps {
 export default function Previews() {
   const [data, setData] = useState<previewPageProps[]>([]);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        const res = await fetch('https://soleauthenticity.azurewebsites.net/api/reviews?page=1&pageSize=10');
-        const data = await res.json();
-        console.log(data.data);
-        setData(data.data);
-      }
-      fetchData();
-    }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(
+        "https://soleauthenticity.azurewebsites.net/api/reviews?page=1&pageSize=10"
+      );
+      const data = await res.json();
+      console.log(data.data);
+      setData(data.data);
+    };
+    fetchData();
+  }, []);
+
+  const current = new Date();
+  const date = `${current.getDate()}/${
+    current.getMonth() + 1
+  }/${current.getFullYear()}`;
+
   return (
-      <Layout>
-        <div>
-          <main className="container mx-auto flex flex-col p-3">
-            <p className="text-4xl inline font-bold text-left ml-0  sm:ml-0 md:ml-10 lg:ml-10 xl:ml-10 2xl:ml-24  my-16 leading-[normal] text-[rgba(35,46,82,1)]">
-              All previews
-            </p>
-  
-            {data?.map((review) => {
-              // let GetDate = dayjs(review.date).format("DD-MMM , YYYY");
-  
-              return (
-                <Post
-                  key={review.productId}
-                  productId={review.productId}
-                  tag='REVIEW'
-                  category={review.category}
-                  elements={review.elements}
-                  title={review.title}
-                  description={review.description}
-                  avatar={review.avatar}
-                />
-              );
-            })}
-  
-            <Pagination />
-          </main>
-  
+    <Layout>
+      <div>
+        <main className={`container mx-auto flex flex-col p-3`}>
+          <p
+            style={{
+              fontWeight: "bold",
+              paddingBottom: "30px",
+              paddingTop: "30px",
+              fontSize: "40px",
+              color: "orange",
+            }}
+          >
+            All previews
+          </p>
+
+          <section className="products-page">
+            <div className="container">
+              <section className="products-content">
+                <section className="products-list">
+                  {data?.map((review) => {
+                    {
+                      date;
+                    }
+
+                    return (
+                      <Post
+                        key={review.productId}
+                        productId={review.productId}
+                        tag="REVIEW"
+                        date={review.date}
+                        category={review.category}
+                        elements={review.elements}
+                        title={review.title}
+                        description={review.description}
+                        avatar={review.avatar}
+                      />
+                    );
+                  })}
+                </section>
+              </section>
+            </div>
+          </section>
+
+          <Pagination />
           <Newsletter />
           <Footer />
-        </div>
-      </Layout>
+        </main>
+      </div>
+    </Layout>
   );
 }

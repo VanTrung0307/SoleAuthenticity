@@ -6,7 +6,7 @@ import Link from "next/link";
 // import { useEffect, useState } from "react";
 import { StoreTypeList } from "types";
 
-const StoreItem = ({id, name, address, avatar, /*link*/}: StoreTypeList) => {
+const StoreItem = ({ id, name, address, avatar }: StoreTypeList) => {
   // const dispatch = useDispatch();
   // const { favProducts } = useSelector((state: RootState) => state.user);
 
@@ -67,27 +67,27 @@ const StoreItem = ({id, name, address, avatar, /*link*/}: StoreTypeList) => {
             </Link>
           </div>
 
-          <Link href={`/store/${id}`}>
-          <div
-            className="product__description"
-            style={{
-              marginTop: "-100px",
-              marginLeft: "150px",
-              cursor: "pointer",
-            }}
-          >
-            <h3 style={{ fontWeight: "bold" }}>{name}</h3>
-            <h3>
-              <img
-                src="/images/location.png"
-                alt=""
-                style={{ width: "30px", height: " 30px" }}
-              />
-              {address}
-            </h3>
-          </div>
-          </Link>
+      <Link href={`/store/${id}`}>
+        <div
+          className="product__description"
+          style={{
+            marginTop: "-120px",
+            marginLeft: "150px",
+            cursor: "pointer",
+          }}
+        >
+          <h3 style={{ fontWeight: "bold" }}>{name}</h3>
+          <h3>
+            <img
+              src="/images/location.png"
+              alt=""
+              style={{ width: "30px", height: " 30px" }}
+            />
+            {address}
+          </h3>
         </div>
+      </Link>
+    </div>
   );
 };
 

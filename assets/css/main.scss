@@ -3087,7 +3087,6 @@ h5 {
   align-items: center;
   margin-left: 30px;
   margin-top: 15px;
-  
 }
 
 .brand__name {
@@ -3097,15 +3096,29 @@ h5 {
   font-weight: bold;
   color: black;
   height: 0px;
-  opacity: 0.0;
-    -webkit-transition: all 500ms ease-in-out;
-    -moz-transition: all 500ms ease-in-out;
-    -ms-transition: all 500ms ease-in-out;
-    -o-transition: all 500ms ease-in-out;
-    transition: all 500ms ease-in-out;
+  opacity: 0;
+  -webkit-transition: all 500ms ease-in-out;
+  -moz-transition: all 500ms ease-in-out;
+  -ms-transition: all 500ms ease-in-out;
+  -o-transition: all 500ms ease-in-out;
+  transition: all 500ms ease-in-out;
 }
 
 .brand__image:hover ~ .brand__name {
-  opacity: 1.0;
+  opacity: 1;
   transform: translateY(5px);
+}
+
+.icon-left{
+  cursor: pointer;
+}
+.icon-left:hover{
+  color: var(--color-orange);
+}
+
+.icon-right{
+  cursor: pointer;
+}
+.icon-right:hover{
+  color: var(--color-orange);
 }
