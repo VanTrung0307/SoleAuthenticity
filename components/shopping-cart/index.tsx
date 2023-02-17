@@ -2,9 +2,27 @@ import { useSelector } from "react-redux";
 import CheckoutStatus from "../../components/checkout-status";
 import Item from "./item";
 import { RootState } from "store";
+import { useEffect, useState } from "react";
 
 const ShoppingCart = () => {
   const { cartItems } = useSelector((state: RootState) => state.cart);
+
+  const [iamges, setImages] = useState<any>();
+  
+
+  useEffect(() => {
+    (async ()=> {
+      const res = await fetch('https://soleauthenticity.azurewebsites.net/api/products/cus');
+      const resData = await res.json();
+      let idList =  cartItems.map(a => a.id);
+      console.log("idList: ", idList);
+      let newArr= resData.data.filter((x : any) => idList.includes(x.id));
+      // setImages(resData.data.filter((id) => id.id));
+      console.log("new array: ", newArr);
+    })()
+  }, [])
+
+  console.log("Cart Item: ", cartItems);
 
   const priceTotal = () => {
     let totalPrice = 0;
@@ -47,7 +65,7 @@ const ShoppingCart = () => {
                   <Item
                     key={item.id}
                     id={item.id}
-                    thumb={item.thumb}
+                    imgPath={item.imgPath}
                     name={item.name}
                     color={item.color}
                     salePrice={item.salePrice}

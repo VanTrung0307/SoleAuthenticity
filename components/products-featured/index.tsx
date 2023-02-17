@@ -1,9 +1,19 @@
 import ProductsCarousel from './carousel';
-import useSwr from 'swr';
+import { useEffect, useState } from 'react';
 
 const ProductsFeatured = () => {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data } = useSwr('/api/products', fetcher);
+  const [data, setData] = useState<any>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('https://soleauthenticity.azurewebsites.net/api/products/cus');
+      const resData = await res.json();
+
+      setData(resData.data);
+    }
+
+    fetchData();
+  }, [])
 
   return (
     <section className="section section-products-featured">
