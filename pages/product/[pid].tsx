@@ -40,25 +40,28 @@ const Product = () => {
   const [images, setImages] = useState<object[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch(
-        `https://soleauthenticity.azurewebsites.net/api/products/product/${pid}`
-      );
-      const dataRes = await res.json();
-
-      setData(dataRes.data);
-
-      const resImage = await fetch(
-        `https://soleauthenticity.azurewebsites.net/api/product-images/${pid}`
-      );
-      const resImageData = await resImage.json();
-
-      setImages(resImageData.data);
-      console.log("Image", resImageData);
-    };
-
-    fetchData();
-  }, []);
+    if (router.asPath !== router.route) {
+      const fetchData = async () => {
+        const res = await fetch(
+          `https://soleauthenticity.azurewebsites.net/api/products/product/${pid}`
+        );
+        const dataRes = await res.json();
+  
+        setData(dataRes.data);
+  
+        const resImage = await fetch(
+          `https://soleauthenticity.azurewebsites.net/api/product-images/${pid}`
+        );
+        const resImageData = await resImage.json();
+  
+        setImages(resImageData.data);
+        console.log("Image", resImageData);
+      };
+  
+      fetchData();
+    }
+    
+  }, [router.asPath, router.route]);
 
   return (
     <Layout>
