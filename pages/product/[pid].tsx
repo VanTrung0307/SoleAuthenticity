@@ -13,22 +13,6 @@ import { ProductTypeList } from "types";
 import Productcrumb from "./../../components/productcrumb/index";
 import { useRouter } from "next/router";
 
-// type ProductPageType = {
-//   product: ProductTypeList[];
-// };
-
-// export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-//   const pid = query.pid;
-//   const res = await fetch(`https://soleauthenticity.azurewebsites.net/api/products/product/${pid}`);
-//   const productRes = await res.json();
-//   const product = productRes.data;
-
-//   return {
-//     props: {
-//       product
-//     },
-//   };
-// };
 
 const Product = () => {
   const [showBlock, setShowBlock] = useState("description");

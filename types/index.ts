@@ -53,7 +53,7 @@ export type CheckTypeList = {
 export type ProductStoreType = {
   id: string;
   name: string;
-  thumb: string;
+  imgPath: string;
   salePrice: any;
   noDiscount: any;
   count: number;

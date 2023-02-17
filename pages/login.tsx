@@ -1,27 +1,20 @@
 import Layout from "../layouts/Main";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-// import { server } from "../utils/server";
-// import { postData } from "../utils/services";
+
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase/config";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { UseAuth } from "./api/context/AuthContext";
 
-// import { axiosClient } from "./api/service/api-service";
 import { useEffect } from "react";
 import { axiosClient } from "./api/service/api-service";
-// type LoginMail = {
-//   email: string;
-//   password: string;
-// };
 
 const LoginPage = () => {
   const { register, errors } = useForm();
-  // const [user, setUser] = useState<object>({});
 
-  const {user, setUser} = UseAuth();
+  const {user, setUser, logOut} = UseAuth();
 
   const router = useRouter();
 
@@ -30,17 +23,15 @@ const LoginPage = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        // console.log(user);
         user.getIdToken(true).then(function(token: any) {
-          // console.log(token);
           axiosClient.post('/Login', {token}).then((idTokenReturn : any) => {
             try {
               const decode = JSON.parse(Buffer.from(idTokenReturn.data.data.split('.')[1], 'base64').toString());
               console.log("Token return: ", decode)
               setUser(decode);
-              // if (decode.role === 'Admin') {
-              //   router.push('/admin');
-              // }
+              if (decode.role === 'Customer') {
+                router.push('/');
+              }
             } catch (error) {
               console.error(error);
             }
