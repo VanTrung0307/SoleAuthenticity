@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import useOnClickOutside from "use-onclickoutside";
-import Logo from "../../assets/icons/logo";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { RootState } from "store";
+import useOnClickOutside from "use-onclickoutside";
+import Logo from "../../assets/icons/logo";
 
 type HeaderType = {
   isErrorPage?: Boolean;
@@ -85,7 +85,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
             <a className="nav-link nav-link-grow-up" href="#">
               Reviews
             </a>
-          </Link >
+          </Link>
           <a className="nav-link nav-link-grow-up" href="#">
             Check
           </a>
@@ -97,7 +97,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
               Store
             </a>
           </Link>
-          <Link href='/brands'>
+          <Link href="/brands">
             <a className="nav-link nav-link-grow-up" href="#">
               Brands
             </a>
@@ -134,11 +134,18 @@ const Header = ({ isErrorPage }: HeaderType) => {
               )}
             </button>
           </Link>
-          <Link href="/login">
+          {/* <Link href="/login"> */}
+          <div className="dropdown">
             <button className="site-header__btn-avatar">
               <i className="icon-avatar"></i>
             </button>
-          </Link>
+            <div className="dropdown-content">
+              <a href="/login" style={{borderRadius: '10px 10px 0 0'}}><img src="/images/logos/enter.png"/>Sign In</a>
+              <a href="#"><img src="/images/logos/register.png"/>Sign Up</a>
+              <a href="#"style={{borderRadius: '0 0 10px 10px'}}><img src="/images/logos/logout.png"/>Log Out</a>
+            </div>
+          </div>
+          {/* </Link> */}
           <button
             onClick={() => setMenuOpen(true)}
             className="site-header__btn-menu"

@@ -6,6 +6,7 @@ import Footer from "components/footer";
 import Layout from "../layouts/Main";
 
 import { useEffect, useState } from "react";
+import Download from './../components/download-banner/index';
 
 // sm: md: lg: xl: 2xl:
 /*
@@ -52,7 +53,8 @@ export default function Previews() {
   return (
     <Layout>
       <div>
-        <main className={`container mx-auto flex flex-col p-3`}>
+        <main style={{marginTop: '150px'}}>
+        <Download />
           <p
             style={{
               fontWeight: "bold",
@@ -60,6 +62,7 @@ export default function Previews() {
               paddingTop: "30px",
               fontSize: "40px",
               color: "orange",
+              textAlign: 'center'
             }}
           >
             All previews
