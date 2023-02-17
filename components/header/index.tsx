@@ -141,7 +141,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
             </button>
             <div className="dropdown-content">
               <a href="/login" style={{borderRadius: '10px 10px 0 0'}}><img src="/images/logos/enter.png"/>Sign In</a>
-              <a href="#"><img src="/images/logos/register.png"/>Sign Up</a>
+              <a href="/register"><img src="/images/logos/register.png"/>Sign Up</a>
               <a href="#"style={{borderRadius: '0 0 10px 10px'}}><img src="/images/logos/logout.png"/>Log Out</a>
             </div>
           </div>
