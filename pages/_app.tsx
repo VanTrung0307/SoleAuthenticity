@@ -12,6 +12,7 @@ import 'react-rater/lib/react-rater.css';
 import '../assets/css/styles.scss';
 
 import * as gtag from './../utils/gtag';
+import { AuthContextProvider } from './api/context/AuthContext';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -23,9 +24,9 @@ if(isProduction) {
 }
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
-  <Fragment>
+  <AuthContextProvider>
     <Component {...pageProps} />
-  </Fragment>
+  </AuthContextProvider>
 );
 
 export default wrapper.withRedux(MyApp);
