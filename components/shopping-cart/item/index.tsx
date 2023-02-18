@@ -2,13 +2,13 @@ import { useDispatch } from 'react-redux';
 import { removeProduct, setCount } from 'store/reducers/cart';
 import { ProductStoreType } from 'types';
 
-const ShoppingCart = ({ thumb, name, id, color, size, count, salePrice, noDiscount }: ProductStoreType) => {
+const ShoppingCart = ({ imgPath, name, id, color, size, count, salePrice, noDiscount }: ProductStoreType) => {
   const dispatch = useDispatch();
 
   const removeFromCart = () => {
     dispatch(removeProduct(
       { 
-        thumb, 
+        imgPath, 
         name, 
         id, 
         color, 
@@ -27,7 +27,7 @@ const ShoppingCart = ({ thumb, name, id, color, size, count, salePrice, noDiscou
 
     const payload = {
       product: { 
-        thumb, 
+        imgPath, 
         name, 
         id, 
         color, 
@@ -47,7 +47,7 @@ const ShoppingCart = ({ thumb, name, id, color, size, count, salePrice, noDiscou
       <td>
         <div className="cart-product">
           <div className="cart-product__img">
-            <img src={thumb} alt="" />
+            <img src={imgPath} alt="" />
           </div>
 
           <div className="cart-product__content">
