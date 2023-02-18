@@ -3,10 +3,15 @@ import { auth } from "../../../firebase/config";
 
 import { useContext, createContext, useState, ReactNode } from "react";
 
+type UserInfo = {
+  id: string;
+  name: string;
+  role: string;
+}
 
 type AuthContextProps = {
-  user: object | null;
-  setUser: (user: object | null) => void;
+  user: UserInfo | null;
+  setUser: (user: UserInfo | null) => void;
   logOut: () => void;
 };
 
@@ -21,7 +26,7 @@ export function UseAuth() {
 }
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<object | null>(null);
+  const [user, setUser] = useState<UserInfo | null>(null);
   
   const logOut = () => {
     signOut(auth);

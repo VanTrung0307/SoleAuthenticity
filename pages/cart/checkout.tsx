@@ -7,9 +7,13 @@ import CheckoutItems from "../../components/checkout/items";
 import { UseAuth } from "pages/api/context/AuthContext";
 // import { ProductStoreType } from 'types';
 import Layout from "../../layouts/Main";
+import { Fragment } from "react";
+import { Router } from "next/router";
+import { useForm } from "react-hook-form";
 
 const CheckoutPage = () => {
-  const { user } = UseAuth();
+  const { user, logOut } = UseAuth();
+  const { register, errors } = useForm();
   const priceTotal = useSelector((state: RootState) => {
     const cartItems = state.cart.cartItems;
     let totalPrice = 0;
@@ -34,7 +38,7 @@ const CheckoutPage = () => {
   };
 
   const fail = () => {
-    toast.error("Đơn hàng không hợp lệ, xin vui lồng kiểm tra lại", {
+    toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 20000,
     });
@@ -52,16 +56,22 @@ const CheckoutPage = () => {
           <div className="checkout-content">
             <div className="checkout__col-6">
               <div className="checkout__btns">
-                <a href="/login">
-                  <button className="btn btn--rounded btn--yellow">
-                    Log in
-                  </button>
-                </a>
-                <a href="/register">
-                  <button className="btn btn--rounded btn--border">
-                    Sign up
-                  </button>
-                </a>
+                {user ? (
+                  <Fragment>
+                    <a
+                      style={{
+                        borderRadius: "10px 10px 0 0",
+                        cursor: "pointer",
+                      }}
+                    >{`${user.name}`}</a>
+                  </Fragment>
+                ) : (
+                  <a href="/login" style={{ borderRadius: "10px" }}>
+                    <button className="btn btn--rounded btn--yellow">
+                      Log in
+                    </button>
+                  </a>
+                )}
               </div>
 
               <div className="block">
@@ -73,7 +83,13 @@ const CheckoutPage = () => {
                         className="form__input form__input--sm"
                         type="text"
                         placeholder="Address"
+                        required
                       />
+                      {errors.type === "required" && (
+                        <p className="message message--error">
+                          This field is required
+                        </p>
+                      )}
                     </div>
                   </div>
                 </form>
@@ -124,13 +140,32 @@ const CheckoutPage = () => {
               <button type="button" className="btn btn--rounded btn--border">
                 Continue shopping
               </button>
-              <button
+              {user ? (
+                <button
+                  onClick={priceTotal > 0 ? successful : fail}
+                  type="button"
+                  className="btn btn--rounded btn--yellow"
+                >
+                  Proceed to payment
+                </button>
+              ) : (
+                <a href="/login">
+                  <button
+                    onClick={priceTotal > 0 ? fail : successful}
+                    type="button"
+                    className="btn btn--rounded btn--yellow"
+                  >
+                    Proceed to payment
+                  </button>
+                </a>
+              )}
+              {/* <button
                 onClick={priceTotal > 0 ? successful : fail}
                 type="button"
                 className="btn btn--rounded btn--yellow"
               >
                 Proceed to payment
-              </button>
+              </button> */}
               <ToastContainer />
             </div>
           </div>

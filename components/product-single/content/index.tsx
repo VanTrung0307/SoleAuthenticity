@@ -15,7 +15,7 @@ import { RootState } from "store";
 
 const Content = ({ product }: any) => {
   const dispatch = useDispatch();
-  const [count, setCount] = useState<number>(0);
+  const [count, setCount] = useState<number>(1);
   const [color, setColor] = useState<string>("");
   const [itemSize, setItemSize] = useState<string>("");
 

@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import Router, { useRouter } from "next/router";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import useOnClickOutside from "use-onclickoutside";
 import Logo from "../../assets/icons/logo";
+import { UseAuth } from "./../../pages/api/context/AuthContext";
 
 type HeaderType = {
   isErrorPage?: Boolean;
@@ -53,6 +54,12 @@ const Header = ({ isErrorPage }: HeaderType) => {
   // on click outside
   useOnClickOutside(navRef, closeMenu);
   useOnClickOutside(searchRef, closeSearch);
+
+  const { user, logOut } = UseAuth();
+  const handleLogout = () => {
+    logOut();
+    Router.push("/login");
+  };
 
   return (
     <header className={`site-header ${!onTop ? "site-header--fixed" : ""}`}>
@@ -103,7 +110,13 @@ const Header = ({ isErrorPage }: HeaderType) => {
             </a>
           </Link>
           <button className="site-nav__btn">
-            <p>Account</p>
+            {user ? (
+              <Fragment>
+                <a>{`$user`}</a>
+              </Fragment>
+            ) : (
+              <a>Account</a>
+            )}
           </button>
         </nav>
 
@@ -140,9 +153,32 @@ const Header = ({ isErrorPage }: HeaderType) => {
               <i className="icon-avatar"></i>
             </button>
             <div className="dropdown-content">
-              <a href="/login" style={{borderRadius: '10px 10px 0 0'}}><img src="/images/logos/enter.png"/>Sign In</a>
-              <a href="/register"><img src="/images/logos/register.png"/>Sign Up</a>
-              <a href="#"style={{borderRadius: '0 0 10px 10px'}}><img src="/images/logos/logout.png"/>Log Out</a>
+              {user ? (
+                <Fragment>
+                  <a
+                    style={{ borderRadius: "10px 10px 0 0", cursor: "pointer" }}
+                  >{`${user.name}`}</a>
+                  <a
+                    type="button"
+                    onClick={handleLogout}
+                    style={{ borderRadius: "0 0 10px 10px", cursor: "pointer" }}
+                  >
+                    <img src="/images/logos/logout.png" />
+                    Log Out
+                  </a>
+                </Fragment>
+              ) : (
+                <>
+                  <a href="/login" style={{ borderRadius: "10px" }}>
+                    <img src="/images/logos/enter.png" />
+                    Log In
+                  </a>
+                  {/* <a href="/register" style={{ borderRadius: "0 0 10px " }}>
+                    <img src="/images/logos/register.png" />
+                    Sign Up
+                  </a> */}
+                </>
+              )}
             </div>
           </div>
           {/* </Link> */}
