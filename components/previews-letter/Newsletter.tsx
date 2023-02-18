@@ -1,21 +1,26 @@
-import React from "react";
-
 // sm: md: lg: xl: 2xl:
 
-function Newsletter(params: NewsletterProps) {
+function Newsletter() {
   return (
     <div
       style={{
         marginTop: "50px",
+        width: "85%",
         height: "200px",
         padding: "10px",
         borderRadius: "30px",
         backgroundColor: "#FFB100",
+        marginLeft: "130px",
       }}
     >
       <div style={{ color: "white" }}>
         <p
-          style={{ fontWeight: "bold", fontSize: "40px", textAlign: "center", marginBottom: '25px' }}
+          style={{
+            fontWeight: "bold",
+            fontSize: "40px",
+            textAlign: "center",
+            marginBottom: "25px",
+          }}
         >
           Subscribe to my newsletter.
         </p>
@@ -33,7 +38,7 @@ function Newsletter(params: NewsletterProps) {
               width: "300px",
               height: "50px",
               borderRadius: "10px 0 0 10px",
-              marginLeft: "400px",
+              marginLeft: "450px",
               marginTop: "25px",
             }}
           >
@@ -58,7 +63,7 @@ function Newsletter(params: NewsletterProps) {
                 fontSize: "15px",
                 paddingLeft: "10px",
                 paddingTop: "16px",
-                cursor: 'pointer'
+                cursor: "pointer",
               }}
             >
               SUBSCRIBE
@@ -71,7 +76,5 @@ function Newsletter(params: NewsletterProps) {
 }
 
 Newsletter.defaultProps = {};
-
-interface NewsletterProps {}
 
 export default Newsletter;

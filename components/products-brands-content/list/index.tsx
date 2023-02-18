@@ -1,36 +1,34 @@
 // import useSwr from 'swr';
-import React, { useEffect, useState } from 'react';
 
 import ProductItem from '../../product-item';
-import ProductsLoading from './loading';
 // import { ProductTypeList } from '../../../types';
 
 const ProductsContent = ({data} :any) => {
   // const fetcher = (url: string) => fetch(url).then((res) => res.json());
   // const { data, error } = useSwr('/api/products', fetcher);
   // const [data, setData] = useState<ProductTypeList[]>();
-  const [loading, setLoading] = useState<boolean>(false);
+  //const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const res = await fetch('https://soleauthenticity.azurewebsites.net/api/products/cus/ver-pagination?page=1&pageSize=10');
-      const dataRes = await res.json();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setLoading(true);
+  //     //const res = await fetch('https://soleauthenticity.azurewebsites.net/api/products/cus/ver-pagination?page=1&pageSize=10');
+  //     //const dataRes = await res.json();
 
-      // setData(dataRes.data);
-      // console.log(dataRes.data);
-      setLoading(false);
-    }
+  //     // setData(dataRes.data);
+  //     // console.log(dataRes.data);
+  //     setLoading(false);
+  //   }
 
-    fetchData();
-  }, [])
+  //   fetchData();
+  // }, [])
 
   // if (error) return <div>Failed to load users</div>;
   return (
     <>
-      {loading && 
+      {/* {loading && 
         <ProductsLoading />
-      }
+      } */}
 
       {data &&
         <section className="products-list">

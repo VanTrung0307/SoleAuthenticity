@@ -1,8 +1,6 @@
 // import Link from "next/link";
 // import dayjs from "dayjs";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "store";
 
 interface PostProps {
   productId: number;
@@ -20,18 +18,16 @@ export default function Post(props: PostProps) {
   // let slug = props.title?.toLowerCase().replaceAll(" ","-")
   // console.log(slug);
 
-  const current = new Date();
-  const date = `${current.getDate()}/${
-    current.getMonth() + 1
-  }/${current.getFullYear()}`;
-
-
-
   return (
     <div className="product-item">
       <div
         className="product__image"
-        style={{ borderRadius: "30px", width: "400px", height: "200px", margin: '0px 80px 100px 0px' }}
+        style={{
+          borderRadius: "30px",
+          width: "400px",
+          height: "200px",
+          margin: "0px 80px 100px 0px",
+        }}
       >
         <Link href={`/product/${rid}`}>
           <a>
@@ -86,7 +82,7 @@ export default function Post(props: PostProps) {
                 textAlign: "left",
                 paddingLeft: "10px",
                 paddingTop: "10px",
-                flexWrap: 'wrap'
+                flexWrap: "wrap",
               }}
             >
               {props.title}
@@ -101,7 +97,7 @@ export default function Post(props: PostProps) {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
-                flexWrap: 'wrap'
+                flexWrap: "wrap",
               }}
             >
               {props.description}

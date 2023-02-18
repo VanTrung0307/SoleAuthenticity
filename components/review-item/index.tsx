@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { some } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
+import { useSelector } from "react-redux";
 // import { toggleFavProduct } from "store/reducers/user";
 import { RootState } from "store";
 import { ReviewTypeList } from "types";

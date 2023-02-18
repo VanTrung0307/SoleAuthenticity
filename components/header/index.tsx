@@ -55,11 +55,11 @@ const Header = ({ isErrorPage }: HeaderType) => {
   useOnClickOutside(navRef, closeMenu);
   useOnClickOutside(searchRef, closeSearch);
 
-  const { user, logOut } = UseAuth();
-  
+  const { logOut } = UseAuth();
+
   const handleLogout = () => {
     logOut();
-    localStorage.removeItem('user')
+    localStorage.removeItem("user");
     Router.push("/login");
   };
 
@@ -67,7 +67,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
     id: string;
     name: string;
     role: string;
-  }
+  };
 
   const [accountUser, setAccountUser] = useState<UserInfo>();
 
@@ -103,7 +103,6 @@ const Header = ({ isErrorPage }: HeaderType) => {
           </a>
         </Link>
         <nav
-        style={{marginLeft: '22px'}}
           ref={navRef}
           className={`site-nav ${menuOpen ? "site-nav--open" : ""}`}
         >
@@ -113,11 +112,37 @@ const Header = ({ isErrorPage }: HeaderType) => {
             </a>
           </Link>
           <a className="nav-link nav-link-grow-up" href="#">
-            Check
+            About
           </a>
-          <Link href="/products">
-            <a className="nav-link nav-link-grow-up">Footwear</a>
-          </Link>
+          <div className="dropdown" style={{ cursor: "pointer" }}>
+            <a className="nav-link nav-link-grow-up">Shop</a>
+            <div className="dropdown-content">
+              <Fragment>
+                <a
+                  href="/products"
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "10px 10px 0 0",
+                    height: "30px",
+                    width: "100px",
+                  }}
+                >
+                  Footwear
+                </a>
+                <a
+                  href="/secondHands"
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "0 0 10px 10px",
+                    height: "30px",
+                    width: "100px",
+                  }}
+                >
+                  Second Hand
+                </a>
+              </Fragment>
+            </div>
+          </div>
           <Link href="/stores">
             <a className="nav-link nav-link-grow-up" href="#">
               Store
@@ -128,11 +153,11 @@ const Header = ({ isErrorPage }: HeaderType) => {
               Brands
             </a>
           </Link>
-          <Link href="/secondHands">
+          {/* <Link href="/secondHands">
             <a className="nav-link nav-link-grow-up" href="#">
               Second Hand
             </a>
-          </Link>
+          </Link> */}
           <button className="site-nav__btn">
             {accountUser ? (
               <Fragment>

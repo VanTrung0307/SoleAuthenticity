@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-function Pagination(props: paginationComponent) {
+function Pagination() {
   return (
     <div
       style={{
@@ -30,7 +30,5 @@ function Pagination(props: paginationComponent) {
 }
 
 Pagination.defaultProps = {};
-
-interface paginationComponent {}
 
 export default Pagination;
