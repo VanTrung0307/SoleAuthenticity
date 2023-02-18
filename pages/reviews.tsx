@@ -82,7 +82,6 @@ export default function Previews() {
                         key={review.productId}
                         productId={review.productId}
                         tag="REVIEW"
-                        date={review.date}
                         category={review.category}
                         elements={review.elements}
                         title={review.title}

@@ -1,11 +1,11 @@
-import Layout from "../layouts/Main";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import Layout from "../layouts/Main";
 
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../firebase/config";
-import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { auth } from "../firebase/config";
 import { UseAuth } from "./api/context/AuthContext";
 
 import { useEffect } from "react";
@@ -14,7 +14,7 @@ import { axiosClient } from "./api/service/api-service";
 const LoginPage = () => {
   const { register, errors } = useForm();
 
-  const {user, setUser, logOut} = UseAuth();
+  const {user, setUser} = UseAuth();
 
   const router = useRouter();
 

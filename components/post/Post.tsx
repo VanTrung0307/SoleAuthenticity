@@ -4,7 +4,6 @@ import Link from "next/link";
 
 interface PostProps {
   productId: number;
-  date: Date;
   tag: string;
   category: string;
   elements: string;
