@@ -7,22 +7,25 @@ import { useEffect, useState } from "react";
 const ShoppingCart = () => {
   const { cartItems } = useSelector((state: RootState) => state.cart);
 
-  const [iamges, setImages] = useState<any>();
-  
+  const [images, setImages] = useState<any>();
 
   useEffect(() => {
-    (async ()=> {
-      const res = await fetch('https://soleauthenticity.azurewebsites.net/api/products/cus');
+    const fetchData = async () => {
+      const res = await fetch(
+        "https://soleauthenticity.azurewebsites.net/api/products/cus"
+      );
       const resData = await res.json();
-      let idList =  cartItems.map(a => a.id);
-      console.log("idList: ", idList);
-      let newArr= resData.data.filter((x : any) => idList.includes(x.id));
-      // setImages(resData.data.filter((id) => id.id));
-      console.log("new array: ", newArr);
-    })()
-  }, [])
+      let ids = cartItems.map((a: any) => a.id);
+      let newArr = resData.data.filter((x: any) => ids.includes(x.id));
+      console.log("New arr", newArr);
+      setImages(newArr);
+      // console.log("Cart item: ", cartItems)
+    };
 
-  console.log("Cart Item: ", cartItems);
+    fetchData();
+  }, [cartItems]);
+
+  // console.log("Cart Item: ", cartItems);
 
   const priceTotal = () => {
     let totalPrice = 0;
@@ -61,19 +64,23 @@ const ShoppingCart = () => {
                   <th></th>
                 </tr>
 
-                {cartItems.map((item) => (
-                  <Item
-                    key={item.id}
-                    id={item.id}
-                    imgPath={item.imgPath}
-                    name={item.name}
-                    color={item.color}
-                    salePrice={item.salePrice}
-                    noDiscount={item.noDiscount}
-                    size={item.size}
-                    count={item.count}
-                  />
-                ))}
+                {cartItems.map((item) => {
+                  const testId = images?.filter((i: any) => i.id === item.id);
+                  // console.log("testID: ", testId.slice(0, 1).shift()?.imgPath);
+                  return (
+                    <Item
+                      key={item.id}
+                      id={item.id}
+                      imgPath={testId && testId.length > 0 ? (testId.slice(0, 1).shift()?.imgPath?? "") : ""}
+                      name={item.name}
+                      color={item.color}
+                      salePrice={item.salePrice}
+                      noDiscount={item.noDiscount}
+                      size={item.size}
+                      count={item.count}
+                    />
+                  );
+                })}
               </tbody>
             </table>
           )}
