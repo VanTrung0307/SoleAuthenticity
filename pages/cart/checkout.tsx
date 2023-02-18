@@ -1,25 +1,24 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RootState } from "store";
 import CheckoutStatus from "../../components/checkout-status";
 import CheckoutItems from "../../components/checkout/items";
-import { UseAuth } from "pages/api/context/AuthContext";
-// import { ProductStoreType } from 'types';
 import Layout from "../../layouts/Main";
-import { Fragment, useEffect, useState } from "react";
-import { Router } from "next/router";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { start } from "repl";
-import Content from "./../../components/product-single/content/index";
-import { result } from "lodash";
+import { debounce } from "lodash";
+import { removeProduct } from "store/reducers/cart";
 
 const CheckoutPage = () => {
-  const { user } = UseAuth();
-  //console.log("user", user);
+  const dispatch = useDispatch();
 
-  const { register, errors } = useForm();
+  const router = useRouter();
+
+  const { errors } = useForm();
   const [address, setAddress] = useState<string>("");
+  // const [ids, setIds] = useState<number[]>();
   const listId: number[] = [];
   const priceTotal = useSelector((state: RootState) => {
     const cartItems = state.cart.cartItems;
@@ -36,6 +35,12 @@ const CheckoutPage = () => {
     }
     return totalPrice;
   });
+
+  const cart : any = useSelector((state: RootState) => {
+    const cartItems = state.cart.cartItems;
+
+    return cartItems;
+  })
 
   const successful = () => {
     toast.success("Đặt hàng thành công", {
@@ -68,21 +73,23 @@ const CheckoutPage = () => {
 
     return listId;
   });
-  console.log("id", ids);
+  // console.log("is: ",typeof(listId));
 
   const listQuantities: number[] = [];
 
   const quantities = useSelector((state: RootState) => {
     const cartItems = state.cart.cartItems;
-    console.log("cart", cartItems);
+    // console.log("cart", cartItems);
 
     if (cartItems.length > 0) {
       cartItems.map((item) => {
         listQuantities.push(item.count);
       });
     }
+
+    return listQuantities;
   });
-  console.log("count quanti", listQuantities);
+  // console.log("count quanti", quantities);
 
   // const handleInputAddress = (e: any) => {
   //   // e.preventDefault();
@@ -104,7 +111,13 @@ const CheckoutPage = () => {
     }
   }, []);
 
-  setTimeout(() => {}, 500);
+  const handleChangeInputAddress = debounce((e: any) => {
+    setAddress(e.target.value)
+  }, 500)
+
+  console.log("Address: ", address);
+  
+  // setTimeout(() => {}, 500);
   async function handleCheckout() {
     let createOrderData = {
       totalPrice: priceTotal,
@@ -120,14 +133,18 @@ const CheckoutPage = () => {
         headers: { "Content-Type": "application/json" },
       }
     );
-
+      
+      
     const dataRes = await response.json();
     try {
       const promises = ids.map((id, index) => {
+        // console.log(id);
+        // console.log(dataRes.data);
+        // console.log(quantities[index]);
         const creatOrderDetailsData = {
           orderId: dataRes.data,
-          productId: [id],
-          quantity: [listQuantities[index]],
+          productId: id,
+          quantity: quantities[index],
         };
         return fetch(
           "https://soleauthenticity.azurewebsites.net/api/order-details/order-detail",
@@ -140,28 +157,16 @@ const CheckoutPage = () => {
           }
         );
       });
-
+      
       const responses = await Promise.all(promises);
+      console.log(responses);
 
-      const result = await Promise.all(
-        responses.map((response) => {
-          if (!response.ok) {
-            throw new Error("Error sending");
-          }
-          return response.json();
-        })
-      );
-      console.log(result);
-    } catch (error) {
+      dispatch(removeProduct(cart));
+      router.push('/');
+    } catch (error) {         
       console.log(error);
     }
-    
-    
-    
-
-    // location.reload();
   }
-  // console.log(handleCheckout);
   
   return (
     <Layout>
@@ -202,7 +207,7 @@ const CheckoutPage = () => {
                         type="text"
                         placeholder="Address"
                         required
-                        onChange={(e) => setAddress(e.target.value)}
+                        onChange={handleChangeInputAddress}
                       />
                       {errors.type === "required" && (
                         <p className="message message--error">
