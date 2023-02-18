@@ -49,8 +49,11 @@ const LoginPage = () => {
   useEffect(() => {
     if (user !== null) {
       handleLoginWithGoogle();
+      localStorage.setItem('user', JSON.stringify(user));
     }
   }, [user]);
+
+
   
   return (
     <Layout>

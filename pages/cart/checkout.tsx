@@ -7,19 +7,26 @@ import CheckoutItems from "../../components/checkout/items";
 import { UseAuth } from "pages/api/context/AuthContext";
 // import { ProductStoreType } from 'types';
 import Layout from "../../layouts/Main";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Router } from "next/router";
 import { useForm } from "react-hook-form";
+import { start } from "repl";
+import Content from "./../../components/product-single/content/index";
+import { result } from "lodash";
 
 const CheckoutPage = () => {
-  const { user, logOut } = UseAuth();
+  const { user } = UseAuth();
+  //console.log("user", user);
+
   const { register, errors } = useForm();
+  const [address, setAddress] = useState<string>("");
+  const listId: number[] = [];
   const priceTotal = useSelector((state: RootState) => {
     const cartItems = state.cart.cartItems;
     let totalPrice = 0;
     if (cartItems.length > 0) {
       cartItems.map((item) => {
-        console.log(item.noDiscount);
+        // console.log(item.noDiscount);
         if (item.salePrice != null) {
           totalPrice += item.salePrice * item.count;
         } else {
@@ -44,6 +51,118 @@ const CheckoutPage = () => {
     });
   };
 
+  const addressValidate = () => {
+    toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 20000,
+    });
+  };
+
+  const ids = useSelector((state: RootState) => {
+    const cartItems = state.cart.cartItems;
+    if (cartItems.length > 0) {
+      cartItems.map((item) => {
+        listId.push(parseInt(item.id));
+      });
+    }
+
+    return listId;
+  });
+  console.log("id", ids);
+
+  const listQuantities: number[] = [];
+
+  const quantities = useSelector((state: RootState) => {
+    const cartItems = state.cart.cartItems;
+    console.log("cart", cartItems);
+
+    if (cartItems.length > 0) {
+      cartItems.map((item) => {
+        listQuantities.push(item.count);
+      });
+    }
+  });
+  console.log("count quanti", listQuantities);
+
+  // const handleInputAddress = (e: any) => {
+  //   // e.preventDefault();
+  //   setAddress(e.target.value);
+  // };
+
+  type UserInfo = {
+    _id: number;
+    name: string;
+    role: string;
+  };
+
+  const [accountUser, setAccountUser] = useState<UserInfo>();
+
+  useEffect(() => {
+    const storeObject = localStorage.getItem("user");
+    if (storeObject) {
+      setAccountUser(JSON.parse(storeObject));
+    }
+  }, []);
+
+  setTimeout(() => {}, 500);
+  async function handleCheckout() {
+    let createOrderData = {
+      totalPrice: priceTotal,
+      customerId: accountUser?._id,
+      shippingAddress: address,
+    };
+    //console.log("hi", createOrderData);
+    const response = await fetch(
+      "https://soleauthenticity.azurewebsites.net/api/orders/order",
+      {
+        method: "POST",
+        body: JSON.stringify(createOrderData),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const dataRes = await response.json();
+    try {
+      const promises = ids.map((id, index) => {
+        const creatOrderDetailsData = {
+          orderId: dataRes.data,
+          productId: [id],
+          quantity: [listQuantities[index]],
+        };
+        return fetch(
+          "https://soleauthenticity.azurewebsites.net/api/order-details/order-detail",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(creatOrderDetailsData),
+          }
+        );
+      });
+
+      const responses = await Promise.all(promises);
+
+      const result = await Promise.all(
+        responses.map((response) => {
+          if (!response.ok) {
+            throw new Error("Error sending");
+          }
+          return response.json();
+        })
+      );
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+    
+    
+    
+
+    // location.reload();
+  }
+  // console.log(handleCheckout);
+  
   return (
     <Layout>
       <section className="cart">
@@ -56,15 +175,14 @@ const CheckoutPage = () => {
           <div className="checkout-content">
             <div className="checkout__col-6">
               <div className="checkout__btns">
-                {user ? (
-                  <Fragment>
-                    <a
-                      style={{
-                        borderRadius: "10px 10px 0 0",
-                        cursor: "pointer",
-                      }}
-                    >{`${user.name}`}</a>
-                  </Fragment>
+                {accountUser ? (
+                  <a
+                    href="/cart/checkout"
+                    style={{
+                      borderRadius: "10px 10px 0 0",
+                      cursor: "pointer",
+                    }}
+                  >{`${accountUser.name}`}</a>
                 ) : (
                   <a href="/login" style={{ borderRadius: "10px" }}>
                     <button className="btn btn--rounded btn--yellow">
@@ -84,6 +202,7 @@ const CheckoutPage = () => {
                         type="text"
                         placeholder="Address"
                         required
+                        onChange={(e) => setAddress(e.target.value)}
                       />
                       {errors.type === "required" && (
                         <p className="message message--error">
@@ -119,55 +238,71 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-            <div className="checkout__col-2">
-              <div className="block">
-                <h3 className="block__title">Your cart</h3>
-                <CheckoutItems />
+            <form className="form">
+              <div className="checkout__col-2">
+                <div className="block">
+                  <h3 className="block__title">Your cart</h3>
+                  <CheckoutItems />
 
-                <div className="checkout-total">
-                  <p>Total cost</p>
-                  <h3>${priceTotal}</h3>
+                  <div className="checkout-total">
+                    <p>Total cost</p>
+                    <h3>${priceTotal}</h3>
+                  </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
 
           <div className="cart-actions cart-actions--checkout">
             <a href="/cart" className="cart__btn-back">
               <i className="icon-left"></i> Back
             </a>
-            <div className="cart-actions__items-wrapper">
-              <button type="button" className="btn btn--rounded btn--border">
-                Continue shopping
-              </button>
-              {user ? (
-                <button
-                  onClick={(user && priceTotal>0) ? successful : fail}
-                  type="button"
+            <form className="form">
+              <div className="cart-actions__items-wrapper">
+                <button type="button" className="btn btn--rounded btn--border">
+                  Continue shopping
+                </button>
+                {/* <button
+                  onClick={handleCheckout}
+                  type="submit"
                   className="btn btn--rounded btn--yellow"
                 >
                   Proceed to payment
-                </button>
-              ) : (
-                <a href="/login">
+                </button> */}
+                {/* {accountUser ? (
                   <button
-                    onClick={(user === null && priceTotal<=0) ? fail : successful}
-                    type="button"
+                    onClick={
+                      accountUser && priceTotal > 0
+                        ? { handleCheckout } && successful
+                        : fail
+                    }
+                    type="submit"
                     className="btn btn--rounded btn--yellow"
                   >
                     Proceed to payment
                   </button>
-                </a>
-              )}
-              {/* <button
-                onClick={priceTotal > 0 ? successful : fail}
-                type="button"
-                className="btn btn--rounded btn--yellow"
-              >
-                Proceed to payment
-              </button> */}
-              <ToastContainer />
-            </div>
+                ) : (
+                  <a href="/login">
+                    <button
+                      onClick={
+                        accountUser == null && priceTotal <= 0
+                          ? { handleCheckout } && fail
+                          : successful
+                      }
+                      type="submit"
+                      className="btn btn--rounded btn--yellow"
+                    >
+                      Proceed to payment
+                    </button>
+                  </a>
+                )} */}
+                <button className="btn btn--rounded btn--yellow" type="button" onClick={() => handleCheckout()}>
+                  Proceed to payment
+                </button>
+
+                <ToastContainer />
+              </div>
+            </form>
           </div>
         </div>
       </section>

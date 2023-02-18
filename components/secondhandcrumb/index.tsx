@@ -1,15 +1,15 @@
 import React from "react";
 
-const SecondHandcrumb = () => (
+const Storecrumb = () => (
   <section className="breadcrumb">
     <div className="container">
       <ul className="breadcrumb-list">
         <li><a href="/"><i className="icon-home"></i></a></li>
-        <li>Second Hands Form</li>
+        <li>All Shops</li>
       </ul>
     </div>
   </section>
 );
 
 
-export default SecondHandcrumb
+export default Storecrumb

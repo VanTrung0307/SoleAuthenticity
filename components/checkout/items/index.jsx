@@ -38,7 +38,7 @@ const CheckoutItems = () => {
                 <span>#{item.id}</span>
               </div>
             </div>
-            <h3>${item.salePrice ? item.salePrice : item.noDiscount}</h3>
+            <h3>{item.salePrice ? item.salePrice : item.noDiscount}đ</h3>
           </li>
         );
       })}

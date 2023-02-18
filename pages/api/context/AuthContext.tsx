@@ -4,7 +4,7 @@ import { auth } from "../../../firebase/config";
 import { useContext, createContext, useState, ReactNode } from "react";
 
 type UserInfo = {
-  id: string;
+  id: number;
   name: string;
   role: string;
 }

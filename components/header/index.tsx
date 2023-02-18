@@ -56,10 +56,28 @@ const Header = ({ isErrorPage }: HeaderType) => {
   useOnClickOutside(searchRef, closeSearch);
 
   const { user, logOut } = UseAuth();
+  
   const handleLogout = () => {
     logOut();
+    localStorage.removeItem('user')
     Router.push("/login");
   };
+
+  type UserInfo = {
+    id: string;
+    name: string;
+    role: string;
+  }
+
+  const [accountUser, setAccountUser] = useState<UserInfo>();
+
+  useEffect(() => {
+    const storeObject = localStorage.getItem("user");
+    if (storeObject) {
+      setAccountUser(JSON.parse(storeObject));
+    }
+  }, []);
+  //console.log('accountUser',accountUser);
 
   return (
     <header className={`site-header ${!onTop ? "site-header--fixed" : ""}`}>
@@ -85,6 +103,7 @@ const Header = ({ isErrorPage }: HeaderType) => {
           </a>
         </Link>
         <nav
+        style={{marginLeft: '22px'}}
           ref={navRef}
           className={`site-nav ${menuOpen ? "site-nav--open" : ""}`}
         >
@@ -109,10 +128,15 @@ const Header = ({ isErrorPage }: HeaderType) => {
               Brands
             </a>
           </Link>
+          <Link href="/secondHands">
+            <a className="nav-link nav-link-grow-up" href="#">
+              Second Hand
+            </a>
+          </Link>
           <button className="site-nav__btn">
-            {user ? (
+            {accountUser ? (
               <Fragment>
-                <a>{`$user`}</a>
+                <a>{`$accountUser`}</a>
               </Fragment>
             ) : (
               <a>Account</a>
@@ -153,11 +177,11 @@ const Header = ({ isErrorPage }: HeaderType) => {
               <i className="icon-avatar"></i>
             </button>
             <div className="dropdown-content">
-              {user ? (
+              {accountUser ? (
                 <Fragment>
                   <a
                     style={{ borderRadius: "10px 10px 0 0", cursor: "pointer" }}
-                  >{`${user.name}`}</a>
+                  >{`${accountUser.name}`}</a>
                   <a
                     type="button"
                     onClick={handleLogout}
