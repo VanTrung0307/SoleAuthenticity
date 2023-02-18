@@ -37,7 +37,7 @@ const LoginPage = () => {
             }
           })          
         });
-        // toast.success("Login Successful...!!");
+        toast.success("Login Successful...!!");
         // router.push("/");
       })
       .catch((error: any) => {

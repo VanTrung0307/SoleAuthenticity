@@ -1,12 +1,12 @@
-import Layout from "../../layouts/Main";
 import { useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { RootState } from "store";
 import CheckoutStatus from "../../components/checkout-status";
 import CheckoutItems from "../../components/checkout/items";
-import { RootState } from "store";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { UseAuth } from "pages/api/context/AuthContext";
 // import { ProductStoreType } from 'types';
+import Layout from "../../layouts/Main";
 
 const CheckoutPage = () => {
   const { user } = UseAuth();
