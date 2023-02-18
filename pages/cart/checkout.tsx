@@ -142,7 +142,7 @@ const CheckoutPage = () => {
               </button>
               {user ? (
                 <button
-                  onClick={user ? successful : fail}
+                  onClick={(user && priceTotal>0) ? successful : fail}
                   type="button"
                   className="btn btn--rounded btn--yellow"
                 >
@@ -151,7 +151,7 @@ const CheckoutPage = () => {
               ) : (
                 <a href="/login">
                   <button
-                    onClick={user === null ? fail : successful}
+                    onClick={(user === null && priceTotal<=0) ? fail : successful}
                     type="button"
                     className="btn btn--rounded btn--yellow"
                   >
