@@ -4,9 +4,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { RootState } from "store";
 import CheckoutStatus from "../../components/checkout-status";
 import CheckoutItems from "../../components/checkout/items";
+import { UseAuth } from "pages/api/context/AuthContext";
+// import { ProductStoreType } from 'types';
 import Layout from "../../layouts/Main";
 
 const CheckoutPage = () => {
+  const { user } = UseAuth();
   const priceTotal = useSelector((state: RootState) => {
     const cartItems = state.cart.cartItems;
     let totalPrice = 0;
@@ -65,7 +68,6 @@ const CheckoutPage = () => {
                 <h3 className="block__title">Shipping information</h3>
                 <form className="form">
                   <div className="form__input-row form__input-row--two">
-
                     <div className="form__col">
                       <input
                         className="form__input form__input--sm"
@@ -74,8 +76,6 @@ const CheckoutPage = () => {
                       />
                     </div>
                   </div>
-
-                  
                 </form>
               </div>
             </div>
@@ -99,11 +99,8 @@ const CheckoutPage = () => {
                       Thanh toán khi nhận hàng
                     </i>
                   </li>
-                  
                 </ul>
               </div>
-
-              
             </div>
 
             <div className="checkout__col-2">
@@ -128,7 +125,7 @@ const CheckoutPage = () => {
                 Continue shopping
               </button>
               <button
-                onClick={priceTotal>0 ? successful : fail}
+                onClick={priceTotal > 0 ? successful : fail}
                 type="button"
                 className="btn btn--rounded btn--yellow"
               >

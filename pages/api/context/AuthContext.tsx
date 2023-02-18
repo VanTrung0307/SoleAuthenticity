@@ -5,8 +5,8 @@ import { useContext, createContext, useState, ReactNode } from "react";
 
 
 type AuthContextProps = {
-  user: any | null;
-  setUser: (user: any | null) => void;
+  user: object | null;
+  setUser: (user: object | null) => void;
   logOut: () => void;
 };
 
@@ -21,7 +21,7 @@ export function UseAuth() {
 }
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<object | null>(null);
   
   const logOut = () => {
     signOut(auth);
