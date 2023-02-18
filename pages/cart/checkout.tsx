@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RootState } from "store";
 import CheckoutStatus from "../../components/checkout-status";
@@ -10,13 +10,13 @@ import { useForm } from "react-hook-form";
 import Layout from "../../layouts/Main";
 import { debounce } from "lodash";
 import { removeProduct } from "store/reducers/cart";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { errors } = useForm();
-  const [address, setAddress] = useState<string>("");
+  const [address, setAddress] = useState<string>('');
   // const [ids, setIds] = useState<number[]>();
   const listId: number[] = [];
   const priceTotal = useSelector((state: RootState) => {
@@ -35,32 +35,32 @@ const CheckoutPage = () => {
     return totalPrice;
   });
 
-  const cart : any = useSelector((state: RootState) => {
+  const cart: any = useSelector((state: RootState) => {
     const cartItems = state.cart.cartItems;
 
     return cartItems;
-  })
+  });
 
-  // const successful = () => {
-  //   toast.success("Đặt hàng thành công", {
-  //     position: toast.POSITION.TOP_RIGHT,
-  //     autoClose: false,
-  //   });
-  // };
+  const successful = () => {
+    toast.success("Đặt hàng thành công", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: false,
+    });
+  };
 
-  // const fail = () => {
-  //   toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin", {
-  //     position: toast.POSITION.TOP_RIGHT,
-  //     autoClose: 20000,
-  //   });
-  // };
+  const fail = () => {
+    toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 20000,
+    });
+  };
 
-  // const addressValidate = () => {
-  //   toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin", {
-  //     position: toast.POSITION.TOP_RIGHT,
-  //     autoClose: 20000,
-  //   });
-  // };
+  const addressValidate = () => {
+    toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 20000,
+    });
+  };
 
   const ids = useSelector((state: RootState) => {
     const cartItems = state.cart.cartItems;
@@ -111,94 +111,111 @@ const CheckoutPage = () => {
   }, []);
 
   const handleChangeInputAddress = debounce((e: any) => {
-    setAddress(e.target.value)
-  }, 500)
+    setAddress(e.target.value);
+  }, 500);
 
   console.log("Address: ", address);
-  
+
   // setTimeout(() => {}, 500);
   async function handleCheckout() {
-    let createOrderData = {
-      totalPrice: priceTotal,
-      customerId: accountUser?._id,
-      shippingAddress: address,
-    };
-    //console.log("hi", createOrderData);
-    const response = await fetch(
-      "https://soleauthenticity.azurewebsites.net/api/orders/order",
-      {
-        method: "POST",
-        body: JSON.stringify(createOrderData),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-      
-      
-    const dataRes = await response.json();
-    try {
-      const promises = ids.map((id, index) => {
-        // console.log(id);
-        // console.log(dataRes.data);
-        // console.log(quantities[index]);
-        const creatOrderDetailsData = {
-          orderId: dataRes.data,
-          productId: id,
-          quantity: quantities[index],
-        };
-        return fetch(
-          "https://soleauthenticity.azurewebsites.net/api/order-details/order-detail",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(creatOrderDetailsData),
-          }
-        );
-      });
-      
-      const responses = await Promise.all(promises);
-      console.log(responses);
+    if (address != "") {
+      let createOrderData = {
+        totalPrice: priceTotal,
+        customerId: accountUser?._id,
+        shippingAddress: address,
+      };
+      //console.log("hi", createOrderData);
+      const response = await fetch(
+        "https://soleauthenticity.azurewebsites.net/api/orders/order",
+        {
+          method: "POST",
+          body: JSON.stringify(createOrderData),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
-      dispatch(removeProduct(cart));
-      router.push('/');
-    } catch (error) {         
-      console.log(error);
+      const dataRes = await response.json();
+      try {
+        const promises = ids.map((id, index) => {
+          // console.log(id);
+          // console.log(dataRes.data);
+          // console.log(quantities[index]);
+          const creatOrderDetailsData: any = {
+            orderId: dataRes.data,
+            productId: id,
+            quantity: quantities[index],
+          };
+          return fetch(
+            "https://soleauthenticity.azurewebsites.net/api/order-details/order-detail",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(creatOrderDetailsData),
+            }
+          );
+        });
+
+        const responses = await Promise.all(promises);
+        if (responses != null) {
+          toast.success("Đặt hàng thành công");
+        } else {
+          toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin");
+        }
+        // successful();
+        //.log(responses);
+
+        dispatch(removeProduct(cart));
+        router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin")
     }
   }
-  
+
+  const handleOnSubmit = () => {
+    if (address == "") {
+      toast.error("that bai");
+    }
+    return;
+  };
+
   return (
     <Layout>
       <section className="cart">
-        <div className="container">
-          <div className="cart__intro">
-            <h3 className="cart__title">Shipping and Payment</h3>
-            <CheckoutStatus step="checkout" />
-          </div>
+        <form className="form">
+          <div className="container">
+            <div className="cart__intro">
+              <h3 className="cart__title">Shipping and Payment</h3>
+              <CheckoutStatus step="checkout" />
+            </div>
 
-          <div className="checkout-content">
-            <div className="checkout__col-6">
-              <div className="checkout__btns">
-                {accountUser ? (
-                  <a
-                    href="/cart/checkout"
-                    style={{
-                      borderRadius: "10px 10px 0 0",
-                      cursor: "pointer",
-                    }}
-                  >{`${accountUser.name}`}</a>
-                ) : (
-                  <a href="/login" style={{ borderRadius: "10px" }}>
-                    <button className="btn btn--rounded btn--yellow">
-                      Log in
-                    </button>
-                  </a>
-                )}
-              </div>
+            <div className="checkout-content">
+              <div className="checkout__col-6">
+                <div className="checkout__btns">
+                  {accountUser ? (
+                    <a
+                      href="/cart/checkout"
+                      style={{
+                        borderRadius: "10px 10px 0 0",
+                        cursor: "pointer",
+                      }}
+                    >{`${accountUser.name}`}</a>
+                  ) : (
+                    <a href="/login" style={{ borderRadius: "10px" }}>
+                      <button className="btn btn--rounded btn--yellow">
+                        Log in
+                      </button>
+                    </a>
+                  )}
+                </div>
 
-              <div className="block">
-                <h3 className="block__title">Shipping information</h3>
-                <form className="form">
+                <div className="block">
+                  <h3 className="block__title">Shipping information</h3>
+
                   <div className="form__input-row form__input-row--two">
                     <div className="form__col">
                       <input
@@ -206,43 +223,38 @@ const CheckoutPage = () => {
                         type="text"
                         placeholder="Address"
                         required
+                        // value={address}
                         onChange={handleChangeInputAddress}
+                        //onClick={addressValidate}
                       />
-                      {errors.type === "required" && (
-                        <p className="message message--error">
-                          This field is required
-                        </p>
-                      )}
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
-            </div>
 
-            <div className="checkout__col-4">
-              <div className="block">
-                <h3 className="block__title">Payment method</h3>
-                <ul className="round-options round-options--three">
-                  <li
-                    className="round-item"
-                    style={{
-                      width: "100%",
-                      color: "green",
-                      border: "1px solid green",
-                    }}
-                  >
-                    <i
-                      style={{ fontFamily: "poppins" }}
-                      className="icon-delivery-fast"
+              <div className="checkout__col-4">
+                <div className="block">
+                  <h3 className="block__title">Payment method</h3>
+                  <ul className="round-options round-options--three">
+                    <li
+                      className="round-item"
+                      style={{
+                        width: "100%",
+                        color: "green",
+                        border: "1px solid green",
+                      }}
                     >
-                      Thanh toán khi nhận hàng
-                    </i>
-                  </li>
-                </ul>
+                      <i
+                        style={{ fontFamily: "poppins" }}
+                        className="icon-delivery-fast"
+                      >
+                        Thanh toán khi nhận hàng
+                      </i>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
 
-            <form className="form">
               <div className="checkout__col-2">
                 <div className="block">
                   <h3 className="block__title">Your cart</h3>
@@ -254,18 +266,28 @@ const CheckoutPage = () => {
                   </div>
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
 
-          <div className="cart-actions cart-actions--checkout">
-            <a href="/cart" className="cart__btn-back">
-              <i className="icon-left"></i> Back
-            </a>
-            <form className="form">
+            <div className="cart-actions cart-actions--checkout">
+              <a href="/cart" className="cart__btn-back">
+                <i className="icon-left"></i> Back
+              </a>
+
               <div className="cart-actions__items-wrapper">
                 <button type="button" className="btn btn--rounded btn--border">
                   Continue shopping
                 </button>
+                {accountUser ? (
+                  <button
+                    onClick={() => handleCheckout()}
+                    type="button"
+                    className="btn btn--rounded btn--yellow"
+                  >
+                    Proceed to payment
+                  </button>
+                ) : (
+                  <a href="/login"></a>
+                )}
                 {/* <button
                   onClick={handleCheckout}
                   type="submit"
@@ -300,15 +322,19 @@ const CheckoutPage = () => {
                     </button>
                   </a>
                 )} */}
-                <button className="btn btn--rounded btn--yellow" type="button" onClick={() => handleCheckout()}>
+                {/* <button
+                  className="btn btn--rounded btn--yellow"
+                  type="button"
+                  onClick={() => handleCheckout()}
+                >
                   Proceed to payment
-                </button>
+                </button> */}
 
                 <ToastContainer />
               </div>
-            </form>
+            </div>
           </div>
-        </div>
+        </form>
       </section>
     </Layout>
   );
