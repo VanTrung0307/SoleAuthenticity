@@ -111,9 +111,11 @@ const Header = ({ isErrorPage }: HeaderType) => {
               Reviews
             </a>
           </Link>
-          <a className="nav-link nav-link-grow-up" href="#">
-            About
-          </a>
+          <Link href="/about">
+            <a className="nav-link nav-link-grow-up" href="#">
+              About
+            </a>
+          </Link>
           <div className="dropdown" style={{ cursor: "pointer" }}>
             <a className="nav-link nav-link-grow-up">Shop</a>
             <div className="dropdown-content">
