@@ -28,7 +28,7 @@ export default function Post(props: PostProps) {
           margin: "0px 80px 100px 0px",
         }}
       >
-        <Link href={`/review/${rid}`}>
+        <Link href={`/product/${rid}`}>
           <a>
             <img
               style={{
@@ -58,7 +58,7 @@ export default function Post(props: PostProps) {
           </a>
         </Link>
 
-        <Link href={`/review/${rid}`}>
+        <Link href={`/product/${rid}`}>
           <div
             style={{
               backgroundColor: "black",

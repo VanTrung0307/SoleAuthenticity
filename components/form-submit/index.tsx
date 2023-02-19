@@ -1,86 +1,10 @@
-import { debounce } from "lodash";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
-import { upLoadAllImage } from "./../../firebase/firebase";
+import React from "react";
+import { ChangeEvent, useState } from "react";
+import Checkbox from "./../products-filter/form-builder/checkbox/index";
 
 function FormSubmit() {
-  const router = useRouter();
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
-
-
-  const [productName, setProductName] = useState<string>();
-  const [brandName, setBrandName] = useState<string>();
-  const [quality, setQuality] = useState<string>();
-  const [priceBuy, setPriceBuy] = useState<number>();
-  const [priceSell, setPriceSell] = useState<number>();
-  const [warranty, setWarranty] = useState<string>();
-  const [contact, setContact] = useState<string>();
-
-  type UserInfo = {
-    _id: string;
-    name: string;
-    role: string;
-  };
-
-  const [accountUser, setAccountUser] = useState<UserInfo>();
-
-  useEffect(() => {
-    const storeObject = localStorage.getItem("user");
-    if (storeObject) {
-      setAccountUser(JSON.parse(storeObject));
-    }
-  }, []);
-
-  // console.log(accountUser?._id);
-
-  // if (accountUser) {
-  //   //setAccountUser(JSON.parse(accountUser));
-  // }
-
-  const handldeSubChange = async () => {
-    const listData = {
-      productName: productName,
-      brandName: brandName,
-      quality: quality,
-      isFullbox: true,
-      priceSell: priceSell,
-      priceBuy: priceBuy,
-      warranty: warranty,
-      contact: contact,
-      customerId: accountUser?._id,
-    };
-    console.log("lst", listData);
-
-    const response = await fetch(
-      "https://soleauthenticity.azurewebsites.net/api/request-sell-secondhands/request-sell-secondhand",
-      {
-        method: "POST",
-        body: JSON.stringify(listData),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-
-    const data = await response.json();
-    console.log("data", data.data);
-    previewUrls.map((url) => {
-      let requestImageData = {
-        imgPath: url,
-        requestSellSecondHandId: data.data,
-      };
-      console.log(requestImageData);
-
-      return fetch(
-        "https://soleauthenticity.azurewebsites.net/api/product-secondhand-images/product-secondhand-image",
-        {
-          method: "POST",
-          body: JSON.stringify(requestImageData),
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-    });
-    router.push("/");
-  };
 
   const onFilesUploadChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const fileInput = e.target;
@@ -113,36 +37,45 @@ function FormSubmit() {
       return;
     }
 
-    upLoadAllImage(validFiles, setPreviewUrls);
+    /** Uploading files to the server */
+    try {
+      var formData = new FormData();
+      validFiles.forEach((file) => formData.append("media", file));
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const {
+        data,
+        error,
+      }: {
+        data: {
+          url: string | string[];
+        } | null;
+        error: string | null;
+      } = await res.json();
+
+      if (error || !data) {
+        alert(error || "Sorry! something went wrong.");
+        return;
+      }
+
+      setPreviewUrls(
+        validFiles.map((validFile) => URL.createObjectURL(validFile))
+      ); // we will use this to show the preview of the images
+
+      /** Reset file input */
+      fileInput.type = "text";
+      fileInput.type = "file";
+
+      console.log("Files were uploaded successfylly:", data);
+    } catch (error) {
+      console.error(error);
+      alert("Sorry! something went wrong.");
+    }
   };
-  console.log("img", previewUrls);
-  const handleProductName = debounce((e: any) => {
-    setProductName(e.target.value);
-  }, 700);
-
-  const handleBrandName = debounce((e: any) => {
-    setBrandName(e.target.value);
-  }, 700);
-
-  const handlePriceBuy = debounce((e: any) => {
-    setPriceBuy(parseInt(e.target.value));
-  }, 700);
-
-  const handlePriceSell = debounce((e: any) => {
-    setPriceSell(parseInt(e.target.value));
-  }, 700);
-
-  const handleWarranty = debounce((e: any) => {
-    setWarranty(e.target.value);
-  }, 700);
-
-  const handleContact = debounce((e: any) => {
-    setContact(e.target.value);
-  }, 700);
-
-  const handleQuanlity = debounce((e: any) => {
-    setQuality(e.target.value);
-  }, 700);
 
   return (
     <div
@@ -153,89 +86,63 @@ function FormSubmit() {
         border: "1px solid black",
         height: "400px",
         textAlign: "center",
+        alignItems: "center",
         padding: "15px 16px",
         borderRadius: "30px",
-        backgroundColor: "var(--color-orange)",
+        backgroundColor: 'var(--color-orange)',
       }}
     >
-      {/* <form
+      <form
         style={{
-          width: "330px",
-          height: "317px",
+          width: "300px",
+          height: "300px",
           border: "1px solid black",
           borderRadius: "30px",
-          backgroundColor: "white",
+          backgroundColor: 'white'
         }}
         className="w-full p-3 border border-gray-500 border-dashed"
-        onSubmit={() => handldeSubChange()}
-      > */}
-      {previewUrls.length > 0 ? (
-        <>
-          <button
-            onClick={() => setPreviewUrls([])}
-            className="mb-3 text-sm font-medium text-gray-500 transition-colors duration-300 hover:text-gray-900"
-          >
-            Clear Previews
-          </button>
+        onSubmit={(e) => e.preventDefault()}
+      >
+        {previewUrls.length > 0 ? (
+          <>
+            <button
+              onClick={() => setPreviewUrls([])}
+              className="mb-3 text-sm font-medium text-gray-500 transition-colors duration-300 hover:text-gray-900"
+            >
+              Clear Previews
+            </button>
 
-          <div
-            className="flex flex-wrap justify-start"
-            style={{
-              width: "321px",
-              height: "264px",
-              display: "flex",
-              flexWrap: "wrap",
-              overflowY: "scroll",
-              marginLeft: "5px",
-            }}
-          >
-            {previewUrls.map((previewUrl, idx) => (
-              <div
-                key={idx}
-                className="w-full p-1.5 md:w-1/2"
-                style={{ width: "100px", height: "100px" }}
-              >
-                <Image
-                  alt="file uploader preview"
-                  objectFit="cover"
-                  src={previewUrl}
-                  width={100}
-                  height={100}
-                  layout="responsive"
-                />
-              </div>
-            ))}
-          </div>
-        </>
-      ) : (
-        <label className="flex flex-col items-center justify-center h-full py-8 transition-colors duration-150 cursor-pointer hover:text-gray-600">
-          <img
-            style={{
-              width: "300px",
-              height: "300px",
-              marginTop: "35px",
-              marginLeft: '30px',
-              backgroundColor: 'white',
-              borderRadius: '30px',
-              border: "1px solid black",
-            }}
-            src="/images/logos/upload-image.png"
-          ></img>
-          {/* <strong style={{ color: "black" }} className="text-sm font-medium">
-              Select images
-            </strong> */}
-          <input
-            className="block w-0 h-0"
-            type="file"
-            onChange={onFilesUploadChange}
-            multiple
-            hidden
-          />
-        </label>
-      )}
-      {/* </form> */}
+            <div className="flex flex-wrap justify-start">
+              {previewUrls.map((previewUrl, idx) => (
+                <div key={idx} className="w-full p-1.5 md:w-1/2">
+                  <Image
+                    alt="file uploader preview"
+                    objectFit="cover"
+                    src={previewUrl}
+                    width={320}
+                    height={218}
+                    layout="responsive"
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <label className="flex flex-col items-center justify-center h-full py-8 transition-colors duration-150 cursor-pointer hover:text-gray-600">
+            <img style={{width: '260px', height: '260px', marginTop: '10px'}} src="/images/logos/upload-image.png"></img>
+            <strong style={{color: "black"}}className="text-sm font-medium">Select images</strong>
+            <input
+              className="block w-0 h-0"
+              type="file"
+              onChange={onFilesUploadChange}
+              multiple
+              hidden
+            />
+          </label>
+        )}
+      </form>
 
-      {/* <form
+      <form
         style={{
           display: "flex",
           flexWrap: "wrap",
@@ -245,17 +152,6 @@ function FormSubmit() {
           alignItems: "center",
           alignContent: "space-evenly",
           flexDirection: "row",
-        }}
-      > */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100%",
-          width: "100%",
-          justifyContent: "space-between",
-          padding: "20px",
-          marginLeft: "100px",
         }}
       >
         <div
@@ -271,39 +167,48 @@ function FormSubmit() {
             style={{
               height: "50px",
               borderRadius: "70px",
-              backgroundColor: "white",
+              backgroundColor: 'white'
             }}
             className="form__input form__input--sm"
             type="text"
             placeholder="Product Name"
             required
-            onChange={(e) => handleProductName(e)}
           />
 
           <input
             style={{
               height: "50px",
               borderRadius: "70px",
-              backgroundColor: "white",
+              backgroundColor: 'white'
             }}
             className="form__input form__input--sm"
             type="text"
             placeholder="Brand Name"
             required
-            onChange={(e) => handleBrandName(e)}
           />
 
           <input
             style={{
               height: "50px",
               borderRadius: "70px",
-              backgroundColor: "white",
+              backgroundColor: 'white'
+            }}
+            className="form__input form__input--sm"
+            type="text"
+            placeholder="Price Buy"
+            required
+          />
+
+          <input
+            style={{
+              height: "50px",
+              borderRadius: "70px",
+              backgroundColor: 'white'
             }}
             className="form__input form__input--sm"
             type="text"
             placeholder="Price Sell"
             required
-            onChange={(e) => handlePriceSell(e)}
           />
         </div>
         <div
@@ -319,86 +224,55 @@ function FormSubmit() {
             style={{
               height: "50px",
               borderRadius: "70px",
-              backgroundColor: "white",
+              backgroundColor: 'white'
             }}
             className="form__input form__input--sm"
             type="text"
             placeholder="Warranty"
             required
-            onChange={(e) => handleWarranty(e)}
           />
 
           <input
             style={{
               height: "50px",
               borderRadius: "70px",
-              backgroundColor: "white",
+              backgroundColor: 'white'
             }}
             className="form__input form__input--sm"
             type="text"
             placeholder="Contact"
             required
-            onChange={(e) => handleContact(e)}
           />
 
           <input
             style={{
               height: "50px",
               borderRadius: "70px",
-              backgroundColor: "white",
+              backgroundColor: 'white'
             }}
             className="form__input form__input--sm"
             type="text"
             placeholder="Quantity"
             required
-            onChange={(e) => handleQuanlity(e)}
           />
-          {/* <div
+          <div
             className="products-filter__block__content"
-            style={{
-              marginLeft: "15px",
-              fontWeight: "bold",
-              paddingTop: "15px",
-            }}
+            style={{ marginLeft: "15px", fontWeight: 'bold', paddingTop: '15px' }}
           >
-            <Checkbox name="product-type" label="Full Box" type="true"/>
-          </div> */}
+            <Checkbox name="product-type" label="Full Box"/>
+          </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            width: "510px",
-            justifyContent: "space-between",
-          }}
-        >
-          <div>
-            <input
-              style={{
-                height: "50px",
-                borderRadius: "70px",
-                backgroundColor: "white",
-              }}
-              className="form__input form__input--sm"
-              type="text"
-              placeholder="Price Buy"
-              required
-              onChange={(e) => handlePriceBuy(e)}
-            />
-          </div>
-          <div>
-            <button
-              className="btn btn--rounded btn--yellow"
-              type="submit"
-              style={{ backgroundColor: "white" }}
-              onClick={() => handldeSubChange()}
-            >
-              Submit
-            </button>
-          </div>
+        <div style={{display: 'flex', width: '100%', textAlign: 'center', justifyContent: 'center'}}>
+          <button
+            className="btn btn--rounded btn--yellow"
+            type="button"
+            style={{backgroundColor: 'white'}}
+          >
+            Submit
+          </button>
         </div>
-      </div>
-      {/* </form> */}
+      </form>
     </div>
   );
 }

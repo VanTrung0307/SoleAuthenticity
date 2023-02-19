@@ -13,8 +13,7 @@ function Newsletter() {
         marginLeft: "130px",
       }}
     >
-      <div style={{ color: "white", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div>
+      <div style={{ color: "white" }}>
         <p
           style={{
             fontWeight: "bold",
@@ -31,14 +30,15 @@ function Newsletter() {
         >
           We post new articles every day.
         </p>
-        </div>
-        
+
+        <div>
           <div
             style={{
               backgroundColor: "#F0ECCF",
               width: "300px",
               height: "50px",
               borderRadius: "10px 0 0 10px",
+              marginLeft: "450px",
               marginTop: "25px",
             }}
           >
@@ -54,7 +54,7 @@ function Newsletter() {
             />
             <p
               style={{
-                backgroundColor: "#000000",
+                backgroundColor: "#FBC252",
                 width: "100px",
                 height: "50px",
                 borderRadius: "0 10px 10px 0",
@@ -71,6 +71,7 @@ function Newsletter() {
           </div>
         </div>
       </div>
+    </div>
   );
 }
 

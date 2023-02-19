@@ -1,9 +1,10 @@
-import { doc, updateDoc } from 'firebase/firestore';
+import { db, storage } from './config';
+import { v4 } from 'uuid';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { v4 } from 'uuid';
-import { db, storage } from './config';
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
+import { ProductType } from '../types';
 
 export const upLoadImage = async (e: any, setUrl: any) => {
     if (e.target.files) {
@@ -41,7 +42,7 @@ export const upLoadImageColor = async (images: any, setListUrls: any) => {
 export const upLoadAllImage = async (images: any, setListUrls: any) => {
     const files: any[] = Object.values(images);
     for (let file of files) {
-        const imageRef = ref(storage, `images2/${v4()}${file.name}`);
+        const imageRef = ref(storage, `images/${v4()}${file.name}`);
         await uploadBytes(imageRef, file)
             .then((snap: any) =>
                 getDownloadURL(snap.ref)
@@ -54,19 +55,19 @@ export const upLoadAllImage = async (images: any, setListUrls: any) => {
     }
 };
 
-// export const addProduct = async (product: ProductType) => {
-//     try {
-        
-//         toast.success('Add Product Successful...!!');
-//     } catch (e) {
-//         toast.error('Add product failed!!');
-//     }
-// };
+export const addProduct = async (product: ProductType) => {
+    try {
+        const docRef = await addDoc(collection(db, 'man'), product);
+        toast.success('Add Product Successful...!!');
+    } catch (e) {
+        toast.error('Add product failed!!');
+    }
+};
 
-export const addOrder = async ( setLoading: any) => {
+export const addOrder = async (order: any, setLoading: any) => {
     setLoading(true);
     try {
-        
+        const docRef = await addDoc(collection(db, 'orders'), order);
         setLoading(false);
         toast.success('Order Successful...!!');
     } catch (e) {
