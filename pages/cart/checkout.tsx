@@ -5,16 +5,17 @@ import { RootState } from "store";
 import CheckoutStatus from "../../components/checkout-status";
 import CheckoutItems from "../../components/checkout/items";
 // import { ProductStoreType } from 'types';
-import { debounce } from "lodash";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { removeProduct } from "store/reducers/cart";
+import { useForm } from "react-hook-form";
 import Layout from "../../layouts/Main";
+import { debounce } from "lodash";
+import { removeProduct } from "store/reducers/cart";
+import { useRouter } from "next/router";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  //const { errors } = useForm();
+  const { errors } = useForm();
   const [address, setAddress] = useState<string>('');
   // const [ids, setIds] = useState<number[]>();
   const listId: number[] = [];
@@ -40,26 +41,26 @@ const CheckoutPage = () => {
     return cartItems;
   });
 
-  // const successful = () => {
-  //   toast.success("Đặt hàng thành công", {
-  //     position: toast.POSITION.TOP_RIGHT,
-  //     autoClose: false,
-  //   });
-  // };
+  const successful = () => {
+    toast.success("Đặt hàng thành công", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: false,
+    });
+  };
 
-  // const fail = () => {
-  //   toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin", {
-  //     position: toast.POSITION.TOP_RIGHT,
-  //     autoClose: 20000,
-  //   });
-  // };
+  const fail = () => {
+    toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 20000,
+    });
+  };
 
-  // const addressValidate = () => {
-  //   toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin", {
-  //     position: toast.POSITION.TOP_RIGHT,
-  //     autoClose: 20000,
-  //   });
-  // };
+  const addressValidate = () => {
+    toast.error("Đơn hàng không hợp lệ, xin vui lòng kiểm tra lại thông tin", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 20000,
+    });
+  };
 
   const ids = useSelector((state: RootState) => {
     const cartItems = state.cart.cartItems;
@@ -175,12 +176,12 @@ const CheckoutPage = () => {
     }
   }
 
-  // const handleOnSubmit = () => {
-  //   if (address == "") {
-  //     toast.error("that bai");
-  //   }
-  //   return;
-  // };
+  const handleOnSubmit = () => {
+    if (address == "") {
+      toast.error("that bai");
+    }
+    return;
+  };
 
   return (
     <Layout>
