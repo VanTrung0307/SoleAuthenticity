@@ -4,7 +4,7 @@ import CheckCarousel from './carousel';
 
 const CheckFeatured = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data } = useSwr('/api/checks', fetcher);
+  const { data } = useSwr('/api/products', fetcher);
 
   return (
     <section className="section section-products-featured">
